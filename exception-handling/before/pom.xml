@@ -26,8 +26,6 @@
         <junit.jupiter.version>5.5.0</junit.jupiter.version>
         <rider-spring.version>1.7.2</rider-spring.version>
 
-        <spring.fox.version>2.9.2</spring.fox.version>
-
         <surefire.maven.plugin.version>2.22.2</surefire.maven.plugin.version> <!-- 3.0.0-M4 -->
 
         <maven.compiler.source>11</maven.compiler.source>
@@ -123,24 +121,6 @@
             <version>${rider-spring.version}</version>
             <scope>test</scope>
         </dependency>
-
-        <!-- START - swagger requirements -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${spring.fox.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${spring.fox.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-bean-validators</artifactId>
-            <version>${spring.fox.version}</version>
-        </dependency>
-        <!-- END - swagger requirements -->
 
         <!-- JUnit 5 -->
         <!--

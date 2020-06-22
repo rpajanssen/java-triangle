@@ -4,7 +4,6 @@ import com.example.exceptionhandling.dao.PersonDAO;
 import com.example.exceptionhandling.dao.exceptions.PersonAlreadyExistsException;
 import com.example.exceptionhandling.dao.exceptions.PersonNotFoundException;
 import com.example.exceptionhandling.domain.api.Person;
-import com.example.exceptionhandling.rest.exceptionhandlers.PersonResourceExceptionHandler;
 import com.example.exceptionhandling.rest.resources.PersonCrudResource;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.jupiter.api.AfterEach;
@@ -41,16 +40,13 @@ public abstract class PersonMockedBase {
     @Autowired
     private PersonCrudResource resource;
 
-    @Autowired
-    private PersonResourceExceptionHandler exceptionHandler;
-
     @BeforeEach
     public void setup() throws PersonAlreadyExistsException, PersonNotFoundException {
         // Using the MOCK test mode Spring Cloud Contract will generate integration test that use a MockMvc and
         // RestAssured. Our base class needs to setup this environment.
 
         // deploy the resource and global exception handler
-        RestAssuredMockMvc.standaloneSetup(resource, exceptionHandler);
+        RestAssuredMockMvc.standaloneSetup(resource);
 
         defineMockingBehavior();
     }

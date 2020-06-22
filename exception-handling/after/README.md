@@ -1,6 +1,6 @@
 # What?
 
-This example project will demonstrate good exceptionhandling in your REST resources.
+This example project will demonstrate proper exception handling in your REST resources.
 
 # Requirements
 

@@ -5,14 +5,19 @@ import com.example.exceptionhandling.dao.exceptions.PersonAlreadyExistsException
 import com.example.exceptionhandling.dao.exceptions.PersonNotFoundException;
 import com.example.exceptionhandling.domain.api.Person;
 import com.example.exceptionhandling.domain.api.SafeList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.PersistenceException;
 import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/person")
 public class PersonCrudResource {
+    private final static Logger logger = LoggerFactory.getLogger(PersonCrudResource.class);
+
     private final PersonDAO<Person> personDao;
 
     public PersonCrudResource(PersonDAO<Person> personDao) {
@@ -31,10 +36,19 @@ public class PersonCrudResource {
         return personDao.add(person);
     }
 
+    // NOTE : example 6 - Using low level code at wrong higher abstraction level
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public void updatePerson(@Valid @RequestBody Person person) throws PersonNotFoundException {
-        personDao.update(person);
+    public void updatePerson(@Valid @RequestBody Person person) throws Exception {
+        try {
+            personDao.update(person);
+        } catch(PersonNotFoundException exception) {
+            logger.error("unable to update person " + person.getId());
+            throw new Exception(exception.getMessage(), exception);
+        } catch(PersistenceException exception) {
+            logger.error("unable to update person " + person.getId());
+            throw new Exception(exception.getMessage(), exception);
+        }
     }
 
     @DeleteMapping(path="/{personId}")

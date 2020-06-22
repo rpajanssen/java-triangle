@@ -16,53 +16,62 @@ are run by maven as a regular unit test.
 
 # So... what is wrong with it?
 
-## Missing REST resource error handling
+## 1. Missing REST resource error handling
 
 ...
 
-## Missing error-handling filter 
+## 2. Missing error-handling filter 
 
 What if you have a CORS filter that throws an exception?
 
-## Missing error-handling resource
+## 3. Missing error-handling resource
 
 ...
 
-## Duplicated catch blocks
+## 4. Duplicating catch blocks
 
 ...
 
-## Using high level HTTP code at wrong abstraction level
+## 5. Using high abstraction level code at wrong lower abstraction level
+
+An example is given in the DBPersonDAO in the method: _void update(Person person)_.
+
+Here we see that an exception is being thrown and we also set the Http status code
+for the response. This is wrong because:
+- This DAO is not aware its result will eventually be used in a REST resource. 
+- We now pull in higher level HTTP dependencies in a lower level persistence class.
+- We run the risk of creating circular dependencies between the high/low level classes.
+- We can't reuse the DAO anymore for anything else.
+
+Always use one abstraction level in a class and in a method.
+
+## 6. Using low level code at wrong higher abstraction level
 
 ...
 
-## Using low level persistence code at wrong abstraction level
+## 7. Catching very abstract generic exceptions
 
 ...
 
-## Catching very abstract generic exceptions
+## 8. Transforming generic exceptions into specific without the required knowledge
 
 ...
 
-## Transforming generic exception into specific without the required knowledge
+## 9. Catching and rethrowing the same exceptions
 
 ...
 
-## Catching and rethrowing the same exception
-
-...
-
-## Logging errors for handled exceptions that are not your responsibility  
+## 10. Logging errors for handled exceptions that are not your responsibility  
 
 ...
 
 # And...
 
-## Handle access denied exceptions
+## 11. Handle access denied exceptions
 
 ...
 
-## Handle method level security
+## 12. Handle method level security
 
 ...
 

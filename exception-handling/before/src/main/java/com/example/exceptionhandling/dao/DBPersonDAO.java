@@ -5,6 +5,7 @@ import com.example.exceptionhandling.dao.exceptions.PersonNotFoundException;
 import com.example.exceptionhandling.domain.api.Person;
 import com.example.exceptionhandling.domain.db.PersonEntity;
 import com.example.exceptionhandling.repositories.PersonEntityRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -52,10 +53,11 @@ public class DBPersonDAO implements PersonDAO<Person>{
         return new Person(personRepository.save(new PersonEntity(person)));
     }
 
+    // NOTE : example 5 - Using high level HTTP code at wrong abstraction level
     @Override
     public void update(Person person) throws PersonNotFoundException {
         if(!existsById(person.getId())) {
-            throw new PersonNotFoundException(person, "person does not exit");
+            throw new PersonNotFoundException(person, HttpStatus.NOT_FOUND + ": person does not exit");
         }
 
         personRepository.save(new PersonEntity(person));

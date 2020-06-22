@@ -56,7 +56,7 @@ to the database. This exception may NEVER be thrown!
 - We now pull in lower abstraction level dependencies into this higher abstraction level class.
 - We run the risk of creating circular dependencies between the high/low level classes.
 
-## 7. Catching very abstract generic exceptions
+## 7. Catching abstract generic exceptions
 
 An example is given in the PersonCrudResource in the method: _allPersons()_.
 
@@ -65,7 +65,7 @@ obfuscates the real behavior! We now do not know which exceptions can actually o
 They are all handled in the same way, which may not be correct. It is better to be 
 explicit. 
 
-## 8. Throwing very abstract generic exceptions
+## 8. Throwing abstract generic exceptions
 
 An example is given in the PersonCrudResource in the method: _allPersons()_.
 
@@ -73,25 +73,31 @@ It is bad practice to throw Exception or RuntimeException in your code. It reall
 it hard to understand what went wrong and how to handle the exception if you use an 
 programming API that only returns these abstract exceptions. 
 
+Another example is given in the DBPersonDAO in the method: _findById(long id)_.
+
+Throwing generic exceptions you loose the knowledge of what went wrong. If you observe
+a method declaration in an interface that throws an Exception, it does not give you
+any indication what can go wrong. If it throws exceptions like PersonAlreadyExistsException
+and BlacklistedLastNameException then you know these are the only two expected exceptions
+and you know what you need to handle. The code has become cleaner and quicker to 
+comprehend. Also the exception handlers can now be cleaner. You don't need to use 
+code lik instanceof or similar.
+
 Note that Sonar (and other static code analyzers) will probably warn you about this as well.
 
-## 9. Transforming generic exceptions into specific without the required knowledge
-
-...
-
-## 10. Catching and rethrowing the same exceptions
+## 9. Catching and rethrowing the same exceptions
 
 An example is given in the PersonCrudResource in the method: _allPersons()_.
 
 It does not make sense to catch an exception and then rethrow the same exception. But 
-this construct can be found in the code and it often occurs if a developer want to
+this construct can be found in the code and it often occurs if a developer wants to
 log certain information. In these situations it is better to log information right before
 the original exception is thrown, or to log the information where the resulting exception
-will eventually be handled and skip the catching it as we did in the example code. 
+will eventually be handled and skip the try-catching as we have it in this example code. 
 
 Catching-and-rethrow is NOT handling it!
 
-## 11. Unnecessary exception chaining
+## 10. Unnecessary exception chaining
 
 An example is given in the PersonCrudResource in the method: _allPersons()_.
 
@@ -109,15 +115,11 @@ example code.
 
 Catching-transform-and-rethrow is NOT handling it!
 
-## 12. Throwing generic exceptions
+## 11. Logging errors for handled exceptions that are not your responsibility  
 
 ...
 
-## 13. Logging errors for handled exceptions that are not your responsibility  
-
-...
-
-## 14. Unwanted swallowing of exceptions
+## 12. Unwanted swallowing of exceptions
 
 An example is given in the PersonCrudResource in the method: _deletePerson(long personId)_.
 
@@ -131,11 +133,11 @@ deleted might still be there!
 
 # And...
 
-## 15. Handle access denied exceptions
+## 13. Handle access denied exceptions
 
 ...
 
-## 16. Handle method level security
+## 14. Handle method level security
 
 ...
 

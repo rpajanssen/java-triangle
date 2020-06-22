@@ -27,8 +27,8 @@ public class PersonCrudResource {
         this.personDao = personDao;
     }
 
-    // NOTE : example 7/8/10/11 - Catching/throwing very abstract generic exceptions, unnecessary exception chaining and
-    //       cCatching and rethrowing the same exceptions
+    // NOTE : example 7/8/9/10 - Catching/throwing very abstract generic exceptions, unnecessary exception chaining and
+    //       catching and rethrowing the same exceptions
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public SafeList<Person> allPersons() throws Exception {
@@ -42,12 +42,17 @@ public class PersonCrudResource {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Person addPerson(@Valid @RequestBody Person person) throws PersonAlreadyExistsException {
-        return personDao.add(person);
+    public Person addPerson(@Valid @RequestBody Person person) throws Exception {
+        try {
+            return personDao.add(person);
+        } catch(PersonAlreadyExistsException exception) {
+            logger.error("unable add a person " + person.getFirstName() + " " + person.getLastName());
+            throw new Exception(exception.getMessage(), exception);
+        }
     }
 
     // NOTE : example 6 - Using low level code at wrong higher abstraction level
-    // NOTE : example 11 - Unnecessary exception chaining
+    // NOTE : example 10 - Unnecessary exception chaining
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public void updatePerson(@Valid @RequestBody Person person) throws Exception {
@@ -62,7 +67,7 @@ public class PersonCrudResource {
         }
     }
 
-    // NOTE : example 14 - Unwanted swallowing of exceptions
+    // NOTE : example 12 - Unwanted swallowing of exceptions
     @DeleteMapping(path="/{personId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePerson(@PathVariable("personId") long personId) {

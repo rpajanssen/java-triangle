@@ -58,29 +58,66 @@ to the database. This exception may NEVER be thrown!
 
 ## 7. Catching very abstract generic exceptions
 
+An example is given in the PersonCrudResource in the method: _allPersons()_.
+
+Here we observe a try-catch catching the high level rather abstract Exception. This
+obfuscates the real behavior! We now do not know which exceptions can actually occur. 
+They are all handled in the same way, which may not be correct. It is better to be 
+explicit. 
+
+## 8. Throwing very abstract generic exceptions
+
+An example is given in the PersonCrudResource in the method: _allPersons()_.
+
+It is bad practice to throw Exception or RuntimeException in your code. It really makes
+it hard to understand what went wrong and how to handle the exception if you use an 
+programming API that only returns these abstract exceptions. 
+
+Note that Sonar (and other static code analyzers) will probably warn you about this as well.
+
+## 9. Transforming generic exceptions into specific without the required knowledge
+
 ...
 
-## 8. Transforming generic exceptions into specific without the required knowledge
+## 10. Catching and rethrowing the same exceptions
+
+An example is given in the PersonCrudResource in the method: _allPersons()_.
+
+It does not make sense to catch an exception and then rethrow the same exception. But 
+this construct can be found in the code and it often occurs if a developer want to
+log certain information. In these situations it is better to log information right before
+the original exception is thrown, or to log the information where the resulting exception
+will eventually be handled and skip the catching it as we did in the example code. 
+
+Catching-and-rethrow is NOT handling it!
+
+## 11. Unnecessary exception chaining
+
+An example is given in the PersonCrudResource in the method: _allPersons()_.
+
+This anti-pattern is related to the "catching and rethrowing the same exceptions"-pattern.
+The exception is also not handled, it is just transformed into a different exception for
+no obvious reasons. 
+
+The drawback is that you get a deep stack trace and it becomes difficult to figure
+out what was the root cause of the exception, either by reading the code or by trying to 
+analyse the stack trace.
+
+The solution is to throw a different original exception or catch the thrown exception in 
+the location where you handle the exceptions and skip the catching it as we did in the 
+example code.
+
+Catching-transform-and-rethrow is NOT handling it!
+
+## 12. Throwing generic exceptions
 
 ...
 
-## 9. Catching and rethrowing the same exceptions
+## 13. Logging errors for handled exceptions that are not your responsibility  
 
 ...
 
-## 10. Unnecessary exception chaining
-
-...
-
-## 11. Throwing generic exceptions
-
-...
-
-## 12. Logging errors for handled exceptions that are not your responsibility  
-
-...
-
-## 13. Unwanted swallowing of exceptions
+## 14. Unwanted swallowing of exceptions
 
 An example is given in the PersonCrudResource in the method: _deletePerson(long personId)_.
 
@@ -94,11 +131,11 @@ deleted might still be there!
 
 # And...
 
-## 14. Handle access denied exceptions
+## 15. Handle access denied exceptions
 
 ...
 
-## 15. Handle method level security
+## 16. Handle method level security
 
 ...
 

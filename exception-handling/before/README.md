@@ -80,15 +80,31 @@ to the database. This exception may NEVER be thrown!
 
 ...
 
+## 13. Unwanted swallowing of exceptions
+
+An example is given in the PersonCrudResource in the method: _deletePerson(long personId)_.
+
+Sometimes an exception may be thrown that you kind of want to ignore. You may want to
+do some kind of handling, but afterwards you want to continue processing as normal. But 
+there are situations where you should NOT swallow an exception like nothing happened.
+
+In this example the exception is swallowed like nothing happened and the client using
+this REST resource never will know something went wrong and the data that should have been
+deleted might still be there! 
+
 # And...
 
-## 13. Handle access denied exceptions
+## 14. Handle access denied exceptions
 
 ...
 
-## 14. Handle method level security
+## 15. Handle method level security
 
 ...
+
+# And...
+
+Always have automated (integration)tests validating the exception scenarios!
 
 
 # Alternative solutions

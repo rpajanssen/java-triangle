@@ -51,9 +51,14 @@ public class PersonCrudResource {
         }
     }
 
+    // NOTE : example 13 - Unwanted swallowing of exceptions
     @DeleteMapping(path="/{personId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePerson(@PathVariable("personId") long personId) {
-        personDao.delete(personId);
+        try {
+            personDao.delete(personId);
+        } catch (Exception e) {
+            logger.error("unable to delete person " + personId);
+        }
     }
 }

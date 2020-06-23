@@ -17,3 +17,5 @@ Just run all tests: `mvn clean test`
 Note: for the integration tests we use SpringCloudContract to generate the tests before they 
 are run by maven as a regular unit test.
 
+For more on integration testing examples see: https://p-bitbucket.nl.eu.abnamro.com:7999/projects/COESD/repos/devcon2019
+

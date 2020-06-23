@@ -53,6 +53,7 @@ public class PersonCrudResource {
 
     // NOTE : example 6 - Using low level code at wrong higher abstraction level
     // NOTE : example 10 - Unnecessary exception chaining
+    // NOTE : example 12 - Logging errors for handled exceptions that are not your responsibility
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public void updatePerson(@Valid @RequestBody Person person) throws Exception {
@@ -67,7 +68,7 @@ public class PersonCrudResource {
         }
     }
 
-    // NOTE : example 12 - Unwanted swallowing of exceptions
+    // NOTE : example 11 - Unwanted swallowing of exceptions
     @DeleteMapping(path="/{personId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePerson(@PathVariable("personId") long personId) {

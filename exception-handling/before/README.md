@@ -115,11 +115,7 @@ example code.
 
 Catching-transform-and-rethrow is NOT handling it!
 
-## 11. Logging errors for handled exceptions that are not your responsibility  
-
-...
-
-## 12. Unwanted swallowing of exceptions
+## 11. Unwanted swallowing of exceptions
 
 An example is given in the PersonCrudResource in the method: _deletePerson(long personId)_.
 
@@ -130,6 +126,32 @@ there are situations where you should NOT swallow an exception like nothing happ
 In this example the exception is swallowed like nothing happened and the client using
 this REST resource never will know something went wrong and the data that should have been
 deleted might still be there! 
+
+## 12. Logging errors for handled exceptions that are not your responsibility  
+
+An example is given in the DBPersonDAO in the method: _add(Person person)_.
+
+Often whenever an exception is thrown some information is logged to a logger, and often
+it is done at error level. But you always have to be careful what you sent to the logger!
+If you flood your logger, you might not be able to find the information you are looking for.
+If you log a lot of warning or errors, that actually are not, you start to ignore the
+logged information and won't even notice actual errors anymore!
+
+The example given is a perfect example where an error is logged when an exception is thrown 
+that should not have been logged. It is a functional exception, that should be handled in the
+appropriate location in your code. But it is not an error of the DAO that a user/application 
+is looking for information that does not exist!
+
+Another example is given in the PersonCrudResource in the method: _updatePerson(Person person)_.
+
+Two exceptions are caught and for both we log information. But... for one of them this is
+obsolete. Can you guess which one?
+
+Note: do not add log statements for debugging purposes. Write unit/integration tests instead
+and start tracing from your IDE! This will speed up your development by a factor 1000!!!
+
+
+
 
 # And...
 

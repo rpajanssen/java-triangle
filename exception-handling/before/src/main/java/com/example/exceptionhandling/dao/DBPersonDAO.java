@@ -48,9 +48,12 @@ public class DBPersonDAO implements PersonDAO<Person>{
     }
 
     // NOTE : example 8 - Throwing generic exceptions
+    // NOTE : example 12 - Logging errors for handled exceptions that are not your responsibility
     @Override
     public Person add(Person person) throws Exception {
         if(existsById(person.getId())) {
+            logger.error("error adding a person since it already exists : " + person);
+
             throw new Exception("person already exists");
         }
         return new Person(personRepository.save(new PersonEntity(person)));

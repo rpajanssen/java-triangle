@@ -50,6 +50,7 @@ public class PersonResourceExceptionHandler {
         return new ErrorResponse<>((Person)exception.getBindingResult().getTarget(), ErrorCodes.PERSON_INVALID.getCode());
     }
 
+    // todo : add some more specific persistence error handling
     @ResponseBody
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

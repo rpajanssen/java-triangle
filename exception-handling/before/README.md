@@ -18,19 +18,41 @@ are run by maven as a regular unit test.
 
 ## 1. Missing REST resource error handling
 
-...
+If we observe the REST resource we can't see any exception handling! What will this resource 
+return when an exception occurs? What will the response be there is a DB connection problem?
+What will the response be if the data requested for update is not found? What will the response
+be if a validation fails? 
+
+Will the response be predictable? Will it be the one you expect it to be? Will the response be
+without information leakage? 
+
+Can you explain to the consumers of your resource what the error responses will be?
+
+As it is, some default Spring components will handle the exceptions and prepare a response.
+But you obviously would like a bit more control over the response. Maybe you even have a API 
+domain model describing error responses and you always would like to have that returned!
 
 ## 2. Missing error-handling filter 
 
-What if you have a CORS filter that throws an exception?
+What happens when an exception occurs before your resource is called? Maybe you have implemented 
+a filter and the filter throws an (unexpected) exception, what will the response be? 
+
+As it is, some default Spring components will handle the exceptions and prepare a response. 
+And again you may want to have more control over the response as described in example 1 above.
 
 ## 3. Missing error-handling resource
 
-...
+There are still other exception scenarios. What if a rate limiter blocked access to a resource?
+Or another unhandled exception occurred? Then Spring will will redirect to an error resource!
+
+But if you don't take over... you can't control the response! 
 
 ## 4. Duplicating catch blocks
 
-...
+Observing the PersonCrudResource you will notice all the error handling boilerplate that
+pollutes the resource and how similar all that boilerplate code looks. There is a lot of code 
+duplication going on. If you have multiple resources this code wil be duplicated across resources
+as well. 
 
 ## 5. Using high abstraction level code at wrong lower abstraction level
 
@@ -151,17 +173,22 @@ Note: do not add log statements for debugging purposes. Write unit/integration t
 and start tracing from your IDE! This will speed up your development by a factor 1000!!!
 
 
-
-
 # And...
 
 ## 13. Handle access denied exceptions
 
-...
+This example application has an admin resource (that doesn't really do anything :)) but you need
+to be authenticated and have an ADMIN role to access it.
+
+What happens when the authorization fails when you call that resource? Will it give you a nice
+JSON response back... or... an HTML file? 
 
 ## 14. Handle method level security
 
-...
+It is possible to apply security policies to methods (as example by using the @Secured). 
+
+Instead of letting the default Spring error handling kick in, it makes sense again to get some 
+control over the responses.
 
 # And...
 
@@ -194,3 +221,5 @@ Drawbacks of this approach are:
 # Links
 
 https://www.baeldung.com/exception-handling-for-rest-with-spring
+https://thepracticaldeveloper.com/2019/09/09/custom-error-handling-rest-controllers-spring-boot/
+https://www.toptal.com/java/spring-boot-rest-api-error-handling

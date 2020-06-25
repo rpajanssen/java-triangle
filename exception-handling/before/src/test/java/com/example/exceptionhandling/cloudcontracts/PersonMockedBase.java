@@ -41,7 +41,7 @@ public abstract class PersonMockedBase {
     private PersonCrudResource resource;
 
     @BeforeEach
-    public void setup() throws PersonAlreadyExistsException, PersonNotFoundException {
+    public void setup() throws Exception {
         // Using the MOCK test mode Spring Cloud Contract will generate integration test that use a MockMvc and
         // RestAssured. Our base class needs to setup this environment.
 
@@ -58,7 +58,7 @@ public abstract class PersonMockedBase {
      * with only the implementation of the defineMockingBehavior method defining the the behavior for just one
      * contract that will be used by spring-cloud-contract when generating the test classes.
      */
-    private void defineMockingBehavior() throws PersonAlreadyExistsException, PersonNotFoundException {
+    private void defineMockingBehavior() throws Exception {
         // get all persons
         when(personDao.findAll()).thenReturn(Arrays.asList(testPersons()));
 
@@ -91,14 +91,4 @@ public abstract class PersonMockedBase {
         RestAssuredMockMvc.reset();
         Mockito.reset(personDao);
     }
-
-//    /**
-//     * Since the developer on duty was to dumb to figure out how to get the right regular expression to work in the
-//     * Groovy contract, he wrote this method to perform the operation he wanted.
-//     *
-//     * Public methods in extended base test classes will be available for use in the Groovy contracts!
-//     */
-//    public void contains(String text, String value) {
-//        assertThat(text).contains(value);
-//    }
 }

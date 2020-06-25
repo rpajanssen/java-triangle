@@ -16,6 +16,8 @@ import javax.validation.Valid;
 // NOTE : Observe all the boilerplate exception handling code, it is verbose, it has duplications it distracts from
 //        the actual code and makes the code less readable!
 //        And... it'll probably is duplicated in each resource!
+// NOTE : example 1 - Missing REST resource error handling
+// NOTE : example 4 - Duplicating catch blocks
 @RestController
 @RequestMapping("/api/person")
 public class PersonCrudResource {

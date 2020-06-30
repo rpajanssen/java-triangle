@@ -195,31 +195,4 @@ control over the responses.
 Always have automated (integration)tests validating the exception scenarios!
 
 
-# Alternative solutions
 
-## Configure an ExceptionHandlerResolver
-
-- Use DefaultHandlerExceptionResolver but the drawback is that the response body is 
-always null while it also only handles a limited set of Spring exceptions.
-
-- Use ResponseStatusExceptionResolver by annotating the exception classes but the drawback 
-is that the response body is always null!
-
-- Implement a custom HandlerExceptionResolver but the code is verbose and feels like
-boilerplate so a better solution is to use the @ControllerAdvice functionality described
-above.
-
-## Throw ResponseStatusException (Spring 5+)
-
-Drawbacks of this approach are:
-- duplicated exception handling blocks
-- introducing boilerplate exception handling again in resources
-- risk of handling the same exception in different ways
-- not mutually exclusive with the controller-advice
-
-
-# Links
-
-https://www.baeldung.com/exception-handling-for-rest-with-spring
-https://thepracticaldeveloper.com/2019/09/09/custom-error-handling-rest-controllers-spring-boot/
-https://www.toptal.com/java/spring-boot-rest-api-error-handling

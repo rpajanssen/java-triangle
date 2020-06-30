@@ -195,4 +195,59 @@ control over the responses.
 Always have automated (integration)tests validating the exception scenarios!
 
 
+# Resource calls
+
+## Valid person calls
+
+### Get all persons
+
+curl http://localhost:8080/api/person
+
+### add a person
+
+curl --header "Content-Type: application/json" \
+    --request POST \
+    --data '{"firstName":"Jan","lastName":"Janssen"}' \
+    http://localhost:8080/api/person
+                       
+### update a person
+
+curl --header "Content-Type: application/json" \
+    --request PUT \
+    --data '{"id":"1001", "firstName":"Jan","lastName":"Jansen"}' \
+    http://localhost:8080/api/person
+                       
+### delete a person
+
+curl --request DELETE http://localhost:8080/api/person/1001     
+
+
+## Invalid person calls
+
+### Add a person with invalid first name
+
+curl --header "Content-Type: application/json" \
+    --request POST \
+    --data '{"firstName":"","lastName":"Janssen"}' \
+    http://localhost:8080/api/person
+                       
+### Add an existing person
+ 
+curl --header "Content-Type: application/json" \
+    --request POST \
+    --data '{"id":"1001", "firstName":"Jan","lastName":"Janssen"}' \
+    http://localhost:8080/api/person                       
+                       
+
+### update a non-existing person
+
+curl --header "Content-Type: application/json" \
+    --request PUT \
+    --data '{"id":"666", "firstName":"Jan","lastName":"Jansen"}' \
+    http://localhost:8080/api/person
+
+
+## Valid admin calls
+
+curl http://localhost:8080/api/admin/demo                  
 

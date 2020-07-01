@@ -1,6 +1,8 @@
 package com.example.exceptionhandling.dao;
 
 import com.example.exceptionhandling.AvailableProfiles;
+import com.example.exceptionhandling.dao.exceptions.PersonAlreadyExistsException;
+import com.example.exceptionhandling.dao.exceptions.PersonNotFoundException;
 import com.example.exceptionhandling.domain.api.Person;
 import com.example.exceptionhandling.domain.db.PersonEntity;
 import com.example.exceptionhandling.repositories.PersonEntityRepository;
@@ -23,6 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 /**
  * This wired unit test demonstrates the use of DataJpaTest to slice a test. With this annotation only the JPA related
@@ -86,6 +89,19 @@ class DBPersonDAOTest {
     }
 
     @Test
+    void shouldFindAPersonById() {
+        assertThat(underTest).isNotNull();
+
+        List<Person> allPersons = underTest.findAll();
+        Person expectedResult = allPersons.get(0);
+
+        Person result = underTest.findById(expectedResult.getId());
+        assertThat(result).isNotNull();
+        assertThat(result.getFirstName()).isEqualTo(expectedResult.getFirstName());
+        assertThat(result.getLastName()).isEqualTo(expectedResult.getLastName());
+    }
+
+    @Test
     void shouldAddAPerson() throws Exception {
         assertThat(underTest).isNotNull();
 
@@ -101,6 +117,19 @@ class DBPersonDAOTest {
         assertThat(result.get(2).getLastName()).isEqualTo("Eriksen");
         assertThat(result.get(3).getFirstName()).isEqualTo("Katy");
         assertThat(result.get(3).getLastName()).isEqualTo("Perry");
+    }
+
+    @Test
+    void shouldNotAddAPersonThatAlreadyExists() throws Exception {
+        assertThat(underTest).isNotNull();
+
+        List<Person> allPersons = underTest.findAll();
+        Person existingPerson = allPersons.get(1);
+
+        assertThatExceptionOfType(PersonAlreadyExistsException.class)
+                .isThrownBy(() -> {
+                    underTest.add(existingPerson);
+                }).withMessage("person already exists");
     }
 
     /**
@@ -126,6 +155,18 @@ class DBPersonDAOTest {
         assertThat(result.get(1).getLastName()).isEqualTo("Pietersen");
         assertThat(result.get(2).getFirstName()).isEqualTo("Erik");
         assertThat(result.get(2).getLastName()).isEqualTo("Erikson");
+    }
+
+    @Test
+    void shouldNotUpdateANonExistingPerson() throws Exception {
+        assertThat(underTest).isNotNull();
+
+        Person nonExistingPerson = new Person(666L, "Luke", "Skywalker");
+
+        assertThatExceptionOfType(PersonNotFoundException.class)
+                .isThrownBy(() -> {
+                    underTest.update(nonExistingPerson);
+                }).withMessage("404");
     }
 
     @Test

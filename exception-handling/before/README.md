@@ -60,22 +60,23 @@ An example is given in the DBPersonDAO in the method: _void update(Person person
 
 Here we see that an exception is being thrown and we also set the Http status code
 for the response. This is wrong because:
-- This DAO is not aware its result will eventually be used in a REST resource. 
 - We now pull in higher level HTTP dependencies in a lower level persistence class.
+- This DAO is not aware its result will eventually be used in a REST resource. 
 - We run the risk of creating circular dependencies between the high/low level classes.
 - We can't reuse the DAO anymore for anything else.
 
-Always use one abstraction level in a class and in a method.
+Always use one abstraction level in a class and in a method. Push code up or down depending
+on the level of abstraction.
 
 ## 6. Using low level code at wrong higher abstraction level
 
 An example is given in the PersonCrudResource in the method: _updatePerson(Person person)_.
 
 Here we observe a PersistenceException is caught and handled. This is wrong because:
+- We now pull in lower abstraction level dependencies into this higher abstraction level class.
 - The resource is unaware this exception can be thrown! The resource has no way of telling
 that a DAO implementation is used that uses the javax.persistence API to persist something 
 to the database. This exception may NEVER be thrown!
-- We now pull in lower abstraction level dependencies into this higher abstraction level class.
 - We run the risk of creating circular dependencies between the high/low level classes.
 
 ## 7. Catching abstract generic exceptions
@@ -93,7 +94,7 @@ An example is given in the PersonCrudResource in the method: _allPersons()_.
 
 It is bad practice to throw Exception or RuntimeException in your code. It really makes
 it hard to understand what went wrong and how to handle the exception if you use an 
-programming API that only returns these abstract exceptions. 
+programming API that only returns these generic exceptions. 
 
 Another example is given in the DBPersonDAO in the method: _findById(long id)_.
 
@@ -103,7 +104,7 @@ any indication what can go wrong. If it throws exceptions like PersonAlreadyExis
 and BlacklistedLastNameException then you know these are the only two expected exceptions
 and you know what you need to handle. The code has become cleaner and quicker to 
 comprehend. Also the exception handlers can now be cleaner. You don't need to use 
-code lik instanceof or similar.
+code constructs like instanceof or similar.
 
 Note that Sonar (and other static code analyzers) will probably warn you about this as well.
 
@@ -135,7 +136,7 @@ The solution is to throw a different original exception or catch the thrown exce
 the location where you handle the exceptions and skip the catching it as we did in the 
 example code.
 
-Catching-transform-and-rethrow is NOT handling it!
+Catch-transform-and-rethrow is NOT handling it!
 
 ## 11. Unwanted swallowing of exceptions
 

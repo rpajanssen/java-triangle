@@ -40,11 +40,6 @@ public class DBPersonDAO implements PersonDAO<Person>{
     }
 
     @Override
-    public List<Person> findWithLastName(String lastName) {
-        return null;
-    }
-
-    @Override
     public Person add(Person person) throws PersonAlreadyExistsException {
         if(existsById(person.getId())) {
             throw new PersonAlreadyExistsException(person, "person already exists");

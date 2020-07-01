@@ -35,16 +35,8 @@ public class DBPersonDAO implements PersonDAO<Person>{
     public Person findById(long id) {
         Optional<PersonEntity> optionalPersonEntity = personRepository.findById(id);
 
-        if(optionalPersonEntity.isPresent()) {
-            return new Person(optionalPersonEntity.get());
-        }
+        return optionalPersonEntity.map(Person::new).orElse(null);
 
-        return null;
-    }
-
-    @Override
-    public List<Person> findWithLastName(String lastName) {
-        return null;
     }
 
     // NOTE : example 8 - Throwing generic exceptions

@@ -6,7 +6,6 @@ import java.util.List;
 public interface PersonDAO<T> extends Serializable {
     List<T> findAll();
     T findById(long id);
-    List<T> findWithLastName(String lastName);
 
     // NOTE : example 8 - Throwing generic exceptions
     T add(T person) throws Exception;

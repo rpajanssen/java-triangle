@@ -8,8 +8,6 @@ management:
 #        exclude: "*"
 #      base-path: "/"
 
-# todo : should be defined (or not) in the specific property files but then the karate test fails when run from IDE
-#        the instance then no longer has access to the sequence table (or it does not exist) - can't figure out why
 spring:
   banner:
     location: banner.txt

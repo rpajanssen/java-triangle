@@ -12,11 +12,12 @@ This example project will demonstrate some bad exception handling in your REST r
 Just run all tests: `mvn clean test`
 
 Note: for the integration tests we use SpringCloudContract to generate the tests before they 
-are run by maven as a regular unit test.
+are run by maven as a regular unit test. The generated tests can be found in `target\generated-test-sources`.
 
 # What?
 
-This example project will demonstrate some bad exception handling in your REST resources.
+This example project will demonstrate how to fix the bad exception handling examples given 
+in the **before** project.
 
 # Requirements
 
@@ -30,31 +31,77 @@ Just run all tests: `mvn clean test`
 Note: for the integration tests we use SpringCloudContract to generate the tests before they 
 are run by maven as a regular unit test.
 
-# So... what is wrong with it?
+# So... how have we solved the issues?
 
-## 1. Missing REST resource error handling
+## 1. REST resource error handling
 
-If we observe the REST resource we can't see any exception handling! What will this resource 
-return when an exception occurs? What will the response be there is a DB connection problem?
-What will the response be if the data requested for update is not found? What will the response
-be if a validation fails? 
+A good solution to implement REST resource error handling is to implement an error handler that 
+addresses this as a cross-cutting concern. This means that we only have to implement an error handler 
+once and it will be re-used by multiple resources.
 
-Will the response be predictable? Will it be the one you expect it to be? Will the response be
-without information leakage? 
+In Spring we implement a class and annotate it with `@ControllerAdvice` to register it as an REST 
+resource error handler. In this class we can implement error handler methods by annotating
+the methods with `@ExceptionHandler([<class>])`. We can pass a list of exception classes this handler
+should handle.
 
-Can you explain to the consumers of your resource what the error responses will be?
+We can have multiple of these classes annotated with `@ControllerAdvice`. And if we create a qualifier
+we can bind the the exception handler class to a resource by both annotating them with the qualifier.
+Then only that handler will be used for that resource.
 
-As it is, some default Spring components will handle the exceptions and prepare a response.
-But you obviously would like a bit more control over the response. Maybe you even have a API 
-domain model describing error responses and you always would like to have that returned!
+In our example we have the `PersonResourceExceptionHandler` error handler class and we created the
+qualifier `PersonResourceExceptionHandling` and annotated both the error handler class and resource 
+with it.
+
+Since we can cover each exception in the handler we have full control over the response that will
+be send back to the consumer.
+
+Another option is to implement the error handler methods in the resource itself. Drawback is that
+the resource will become larger, it will have more code that distracts from the business functionality.
+And you can not re-use the error handlers so if you have multiple resources you will end up
+duplicating code.
+
+The JAX-RS alternative is : **ExceptionMapper**.
+
+### Alternative solutions
+
+#### Configure an ExceptionHandlerResolver
+
+- Use Spring's DefaultHandlerExceptionResolver but the drawback is that the response body is 
+always null while it also only handles only a limited set of Spring exceptions.
+
+- Use Spring's ResponseStatusExceptionResolver by annotating the exception classes but the drawback 
+is that the response body is always null!
+
+- Implement a custom HandlerExceptionResolver but the code is verbose and feels like
+boilerplate so a better solution is to use the @ControllerAdvice functionality described
+above.
+
+#### Throw ResponseStatusException (Spring 5+)
+
+Drawbacks of this approach are:
+- duplicated exception handling blocks
+- introducing boilerplate exception handling again in resources
+- risk of handling the same exception in different ways
+- not mutually exclusive with the controller-advice
 
 ## 2. Missing error-handling filter 
 
-What happens when an exception occurs before your resource is called? Maybe you have implemented 
-a filter and the filter throws an (unexpected) exception, what will the response be? 
+It might be possible you have (implemented and) configured request/response filters. It would be 
+great if these filters never threw exceptions but only returned responses, but if they don't
+you need to handle the exceptions. 
 
-As it is, some default Spring components will handle the exceptions and prepare a response. 
-And again you may want to have more control over the response as described in example 1 above.
+_Note: if they do return a response... make sure it is compliant with your REST resources API 
+domain model!_
+
+Because the code in the filters is executed before the code from the REST resource is called or 
+after the REST resource has finished executing, any exception thrown will not be handled by
+the exception handler from example 1. An example to catch these exception is to have a
+request filter that is executed first in the chain of filters and catches all exceptions and
+transforms them into proper responses matching your API domain model.
+
+In this example we implemented the `ErrorHandlingFilter` class that does exactly that.
+
+The JAX-RS alternative is : **ContainerRequestFilter** and **ContainerResponseFilter**.
 
 ## 3. Missing error-handling resource
 
@@ -210,28 +257,6 @@ control over the responses.
 # And...
 
 Always have automated (integration)tests validating the exception scenarios!
-
-# Alternative solutions
-
-## Configure an ExceptionHandlerResolver
-
-- Use DefaultHandlerExceptionResolver but the drawback is that the response body is 
-always null while it also only handles a limited set of Spring exceptions.
-
-- Use ResponseStatusExceptionResolver by annotating the exception classes but the drawback 
-is that the response body is always null!
-
-- Implement a custom HandlerExceptionResolver but the code is verbose and feels like
-boilerplate so a better solution is to use the @ControllerAdvice functionality described
-above.
-
-## Throw ResponseStatusException (Spring 5+)
-
-Drawbacks of this approach are:
-- duplicated exception handling blocks
-- introducing boilerplate exception handling again in resources
-- risk of handling the same exception in different ways
-- not mutually exclusive with the controller-advice
 
 # Resource calls
 

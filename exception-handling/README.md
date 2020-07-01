@@ -15,7 +15,7 @@ addresses these mistakes.
 Just run all tests: `mvn clean test`
 
 Note: for the integration tests we use SpringCloudContract to generate the tests before they 
-are run by maven as a regular unit test.
+are run by maven as a regular unit test. The generated tests can be found in `<module>\target\generated-test-sources`.
 
 For more on integration testing examples see: https://p-bitbucket.nl.eu.abnamro.com:7999/projects/COESD/repos/devcon2019
 

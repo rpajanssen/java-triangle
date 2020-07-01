@@ -12,7 +12,7 @@ This example project will demonstrate some bad exception handling in your REST r
 Just run all tests: `mvn clean test`
 
 Note: for the integration tests we use SpringCloudContract to generate the tests before they 
-are run by maven as a regular unit test.
+are run by maven as a regular unit test. The generated tests can be found in `target\generated-test-sources`.
 
 # So... what is wrong with it?
 

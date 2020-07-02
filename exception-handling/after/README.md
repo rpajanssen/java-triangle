@@ -84,6 +84,9 @@ Drawbacks of this approach are:
 - risk of handling the same exception in different ways
 - not mutually exclusive with the controller-advice
 
+The JAX-RS alternative is : **WebApplicationException** (and support for a limited set
+of specific resource exceptions like **BadRequestException**).
+
 ## 2. Missing error-handling filter 
 
 It might be possible you have (implemented and) configured request/response filters. It would be 
@@ -108,7 +111,13 @@ The JAX-RS alternative is : **ContainerRequestFilter** and **ContainerResponseFi
 There are still other exception scenarios. What if a rate limiter blocked access to a resource?
 Or another unhandled exception occurred? Then Spring will will redirect to an error resource!
 
-But if you don't take over... you can't control the response! 
+To have full control over the response you can implement your own error resource as we did in
+this example with the **ErrorHandlerResource**.
+
+This resource will respond with an error response compliant with our REST domain API model.
+
+I am not aware of a JAX-RS alternative. It could be that you need to configure your application
+server (or other, like an api gateway) to redirect to a resource for error handling.
 
 ## 4. Duplicating catch blocks
 

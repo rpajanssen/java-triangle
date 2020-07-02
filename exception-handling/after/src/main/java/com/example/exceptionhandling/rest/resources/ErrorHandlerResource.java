@@ -33,7 +33,6 @@ public class ErrorHandlerResource implements ErrorController {
     public ResponseEntity<ErrorResponse> jsonError(HttpServletRequest request) {
         Integer statusCode = (Integer) request.getAttribute(PROPERTY_STATUS_CODE);
         Exception exception = (Exception) request.getAttribute(PROPERTY_EXCEPTION);
-        //exception.printStackTrace();
 
         // todo : it would be wise to log the exception information here as well
 

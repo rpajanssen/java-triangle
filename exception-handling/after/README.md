@@ -60,7 +60,8 @@ the resource will become larger, it will have more code that distracts from the 
 And you can not re-use the error handlers so if you have multiple resources you will end up
 duplicating code.
 
-The JAX-RS alternative is : **ExceptionMapper**.
+The JAX-RS alternative is : **ExceptionMapper**. And you need to implement an exception-mapper
+for each exception you want to handle.
 
 ### Alternative solutions
 
@@ -121,10 +122,26 @@ server (or other, like an api gateway) to redirect to a resource for error handl
 
 ## 4. Duplicating catch blocks
 
-Observing the PersonCrudResource you will notice all the error handling boilerplate that
-pollutes the resource and how similar all that boilerplate code looks. There is a lot of code 
-duplication going on. If you have multiple resources this code wil be duplicated across resources
-as well. 
+In the __before__ example we did not have any exception-handler implementation and try-catch 
+statements were written in the resources and delegates that were called from the resource.
+
+Most of these try-catch blocks duplicated the same boilerplate. The boilerplate makes it more
+difficult to read and understand the code, it distracts from what is really important. And
+we all understand why code duplication is something you need to avoid.
+
+By implementing exception-handlers and extracting them into a single class (the one annotated
+with `@Controlleradvice`) we have cleaned up the resource a lot. All the boilerplate is gone!
+
+And even the code in the exception-handlers is cleaner because no try-catch block is needed
+anymore!
+
+This code is now cleaner and because of this better to read, better to understand and easier 
+to write a unit test for.
+
+Note: other possibilities to get rid of this kind of code duplication is to extract the 
+duplicated code into a method or to implement a template (Template pattern) that captures
+the try-catch blocks. But of course, implementing a cross-cutting-concern solution is in this
+scenario the best option!
 
 ## 5. Using high abstraction level code at wrong lower abstraction level
 

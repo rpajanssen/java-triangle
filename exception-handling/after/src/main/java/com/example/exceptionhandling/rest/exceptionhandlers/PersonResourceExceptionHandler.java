@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * possible error codes explaining what they stand for, you do not know what went wrong! This is helpful in making
  * life a bit harder for hackers by not giving away information (information leakage).
  *
- * Note that with JAX-RS we can use ExceptionMappers as equivalent.
+ * Note that with JAX-RS we can use ExceptionMappers as equivalent. You just need to implement one exception-mapper
+ * for each exception you want to handle. You need to extend ExceptionMapper and you need to annotate the class
+ * with @Provider.
  */
 @ControllerAdvice (annotations = PersonResourceExceptionHandling.class )
 public class PersonResourceExceptionHandler {
@@ -42,6 +44,9 @@ public class PersonResourceExceptionHandler {
      * This handler handles the bean validations defined for the bean arguments of the person rest-resource. The spring-
      * binder will bind the json to an instance of a person an perform all validations. If any validation fails a
      * MethodArgumentNotValidException will be throw.
+     *
+     * Note: Using JAX-RS a different exception will be thrown, the ValidationException. Be aware that these kind of
+     * exceptions may depend on the framework of choice!
      */
     @ResponseBody
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -50,13 +55,17 @@ public class PersonResourceExceptionHandler {
         return new ErrorResponse<>((Person)exception.getBindingResult().getTarget(), ErrorCodes.PERSON_INVALID.getCode());
     }
 
-    // todo : add some more specific persistence error handling
+    /**
+     * Note: returning an internal-server-error can lead to unwanted side effects. API gateways/proxies can may swallow
+     * the internal-server-error responses and replace them with their own response! Be aware of this. If it is possible
+     * to return a different status code, that is always preferred!
+     */
     @ResponseBody
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    ErrorResponse unexpectedExceptionHandler(Exception exception) {
+    ErrorResponse<String> unexpectedExceptionHandler(Exception exception) {
         // todo : it would be wise to log the exception information here as well
 
-        return new ErrorResponse(ErrorCodes.UNEXPECTED_EXCEPTION.getCode());
+        return new ErrorResponse<>(ErrorCodes.UNEXPECTED_EXCEPTION.getCode());
     }
 }

@@ -145,28 +145,31 @@ scenario the best option!
 
 ## 5. Using high abstraction level code at wrong lower abstraction level
 
-An example is given in the DBPersonDAO in the method: _void update(Person person)_.
+In the _before_ example in the DBPersonDAO in the method _void update(Person person)_ we noticed
+an exception was thrown and an HTTP error code was set. 
 
-Here we see that an exception is being thrown and we also set the Http status code
-for the response. This is wrong because:
-- We now pull in higher level HTTP dependencies in a lower level persistence class.
-- This DAO is not aware its result will eventually be used in a REST resource. 
-- We run the risk of creating circular dependencies between the high/low level classes.
-- We can't reuse the DAO anymore for anything else.
+But... this DAO is not aware it runs in an application exposing a REST API. The DAO should not
+have any knowledge about how code that calls the DAO will handle its exceptions.
 
-Always use one abstraction level in a class and in a method. Push code up or down depending
-on the level of abstraction.
+The best practice is to always use one abstraction level in a class and in a method. Push 
+code up or down depending on the level of abstraction. You will also reduce the change of
+circular dependencies.
+
+In this example we fixed the problem by not returning an HTTP error code. If this exception
+results in an HTTP response with a certain code, it is up to the resource/exception-handler.
 
 ## 6. Using low level code at wrong higher abstraction level
 
-An example is given in the PersonCrudResource in the method: _updatePerson(Person person)_.
+In the _before_ example in the PersonCrudResource in the method _updatePerson(Person person)_
+we wrote some code to handle exceptions. In that resource we caught a _PersistenceException_.
+But... the resource can't possibly know this exception can be thrown. It is not aware which
+low level persistence layer is being used. So this catch-block may even be a piece of dead 
+code. We also pull in persistence layer dependencies into the resource and we run a higher 
+risk of introducing circular dependencies.
 
-Here we observe a PersistenceException is caught and handled. This is wrong because:
-- We now pull in lower abstraction level dependencies into this higher abstraction level class.
-- The resource is unaware this exception can be thrown! The resource has no way of telling
-that a DAO implementation is used that uses the javax.persistence API to persist something 
-to the database. This exception may NEVER be thrown!
-- We run the risk of creating circular dependencies between the high/low level classes.
+In this case we should remove the catch block for this exception. We did this anyway because 
+we implemented an exception-handler class. But if we had not it would be best to remove the 
+catch-block.
 
 ## 7. Catching abstract generic exceptions
 

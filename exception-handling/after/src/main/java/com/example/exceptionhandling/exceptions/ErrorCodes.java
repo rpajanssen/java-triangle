@@ -3,6 +3,7 @@ package com.example.exceptionhandling.exceptions;
 import org.springframework.http.HttpStatus;
 
 public enum ErrorCodes {
+    ACCESS_DENIED("0005", HttpStatus.FORBIDDEN),
     PERSON_NOT_FOUND("0010", HttpStatus.NOT_FOUND),
     PERSON_ALREADY_EXISTS("0015", HttpStatus.BAD_REQUEST),
     PERSON_INVALID("0020", HttpStatus.BAD_REQUEST),

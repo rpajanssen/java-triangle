@@ -145,7 +145,7 @@ scenario the best option!
 
 ## 5. Using high abstraction level code at wrong lower abstraction level
 
-In the _before_ example in the DBPersonDAO in the method _void update(Person person)_ we noticed
+In the _before_ example in the `DBPersonDAO` in the method _void update(Person person)_ we noticed
 an exception was thrown and an HTTP error code was set. 
 
 But... this DAO is not aware it runs in an application exposing a REST API. The DAO should not
@@ -160,7 +160,7 @@ results in an HTTP response with a certain code, it is up to the resource/except
 
 ## 6. Using low level code at wrong higher abstraction level
 
-In the _before_ example in the PersonCrudResource in the method _updatePerson(Person person)_
+In the _before_ example in the `PersonCrudResource` in the method _updatePerson(Person person)_
 we wrote some code to handle exceptions. In that resource we caught a _PersistenceException_.
 But... the resource can't possibly know this exception can be thrown. It is not aware which
 low level persistence layer is being used. So this catch-block may even be a piece of dead 
@@ -173,108 +173,98 @@ catch-block.
 
 ## 7. Catching abstract generic exceptions
 
-An example is given in the PersonCrudResource in the method: _allPersons()_.
+In the _before_ example in the `PersonCrudResource` in the method _allPersons()_
+we wrote some code to handle exceptions, but it only caught very abstract Exception
+instances.
 
-Here we observe a try-catch catching the high level rather abstract Exception. This
-obfuscates the real behavior! We now do not know which exceptions can actually occur. 
-They are all handled in the same way, which may not be correct. It is better to be 
-explicit. 
+It is always best to be specific about which exceptions can occur and declare these.
+And maybe even handle them differently. Of course you can always have a generic
+error handler, especially for unsigned exceptions, but then it is certainly best to make
+sure you have a cross-cutting-concern solution in place, like we already discussed with
+the exception-handler. 
 
 ## 8. Throwing abstract generic exceptions
 
-An example is given in the PersonCrudResource in the method: _allPersons()_.
+In the _before_ example in the `PersonCrudResource` in the method: _updatePerson()_ we have some
+code that throws new very abstract Exception instances.
 
 It is bad practice to throw Exception or RuntimeException in your code. It really makes
 it hard to understand what went wrong and how to handle the exception if you use an 
 programming API that only returns these generic exceptions. 
 
-Another example is given in the DBPersonDAO in the method: _findById(long id)_.
+Another example is given in the `DBPersonDAO` in the method: _findById(long id)_.
 
-Throwing generic exceptions you loose the knowledge of what went wrong. If you observe
-a method declaration in an interface that throws an Exception, it does not give you
-any indication what can go wrong. If it throws exceptions like PersonAlreadyExistsException
-and BlacklistedLastNameException then you know these are the only two expected exceptions
-and you know what you need to handle. The code has become cleaner and quicker to 
-comprehend. Also the exception handlers can now be cleaner. You don't need to use 
-code constructs like instanceof or similar.
-
-Note that Sonar (and other static code analyzers) will probably warn you about this as well.
+So always throw meaningful exceptions. In the resource we can factor out the exception 
+handling because we have introduced the use of the exception-handler class.
 
 ## 9. Catching and rethrowing the same exceptions
 
-An example is given in the PersonCrudResource in the method: _allPersons()_.
+In the _before_ example in the `PersonCrudResource` in the method _updatePerson()_ we have 
+some exception handling code that catches the exception and then rethrows it.
 
-It does not make sense to catch an exception and then rethrow the same exception. But 
-this construct can be found in the code and it often occurs if a developer wants to
-log certain information. In these situations it is better to log information right before
-the original exception is thrown, or to log the information where the resulting exception
-will eventually be handled and skip the try-catching as we have it in this example code. 
+This often has no value and only adds boilerplate to your code. If you write code like
+this with the intend to add (temporary) debug log/system.out statements... don't! Learn how 
+to use your IDE and how to debug and trace with it. You will become more productive!
 
-Catching-and-rethrow is NOT handling it!
+If you only have a catch block to do some error logging, most likely this logging is in 
+the wrong location in your code! Log something where the exception actually handled. 
 
 ## 10. Unnecessary exception chaining
 
-An example is given in the PersonCrudResource in the method: _allPersons()_.
+In the _before_ example in the `PersonCrudResource` in the method _allPersons()_ we have 
+some exception handling code that chains exceptions.
 
-This anti-pattern is related to the "catching and rethrowing the same exceptions"-pattern.
-The exception is also not handled, it is just transformed into a different exception for
-no obvious reasons. 
-
-The drawback is that you get a deep stack trace and it becomes difficult to figure
-out what was the root cause of the exception, either by reading the code or by trying to 
+When applied often in your code you get a deep stack trace and it becomes difficult to figure
+out what the root cause of the exception is, either by reading the code or by trying to 
 analyse the stack trace.
 
-The solution is to throw a different original exception or catch the thrown exception in 
-the location where you handle the exceptions and skip the catching it as we did in the 
-example code.
-
-Catch-transform-and-rethrow is NOT handling it!
+Often there is no value in chaining so you can ask yourselves the question why you are
+catching the exception in the first place. In this example we rethrow the exact same
+exception, so chaining does not have any value, and we should not have caught the exception.
 
 ## 11. Unwanted swallowing of exceptions
 
-An example is given in the PersonCrudResource in the method: _deletePerson(long personId)_.
+In the _before_ example in the `PersonCrudResource` in the method _deletePerson(long personId)_ 
+we swallow an exception.
 
 Sometimes an exception may be thrown that you kind of want to ignore. You may want to
 do some kind of handling, but afterwards you want to continue processing as normal. But 
-there are situations where you should NOT swallow an exception like nothing happened.
-
-In this example the exception is swallowed like nothing happened and the client using
-this REST resource never will know something went wrong and the data that should have been
-deleted might still be there! 
+there are situations where you should NOT swallow an exception like nothing happened. This
+example is one of them. The consumer of our REST API will now never know if something has 
+gone wrong, and assume the data was deleted, while in fact nothing may have been deleted.
 
 ## 12. Logging errors for handled exceptions that are not your responsibility  
 
-An example is given in the DBPersonDAO in the method: _add(Person person)_.
+In the _before_ example in the `DBPersonDAO` in the method _add(Person person)_ we catch
+exception and then log an error for it.
 
-Often whenever an exception is thrown some information is logged to a logger, and often
-it is done at error level. But you always have to be careful what you sent to the logger!
-If you flood your logger, you might not be able to find the information you are looking for.
-If you log a lot of warning or errors, that actually are not, you start to ignore the
-logged information and won't even notice actual errors anymore!
+Another _before_ example is given in the `PersonCrudResource` in the method: _updatePerson(Person person)_.
 
-The example given is a perfect example where an error is logged when an exception is thrown 
-that should not have been logged. It is a functional exception, that should be handled in the
-appropriate location in your code. But it is not an error of the DAO that a user/application 
-is looking for information that does not exist!
+In both these example we log errors but you can question why? Are they unexpected technical 
+errors of the application (that should be logged)? No, these are valid functional execution
+path where we just need to send a proper response to the consumer of our REST API so it can
+act accordingly. Any logging our part will flood the log file and result in false error 
+log entries. Whenever you have to many errors in your logs that are NOT really errors, it will
+lead to you (and the rest of the team) to start ignoring errors in the log files since you
+experience they mostly don't mean anything and are a waste of time researching. So... all 
+logging within your application has lost its value!
 
-Another example is given in the PersonCrudResource in the method: _updatePerson(Person person)_.
-
-Two exceptions are caught and for both we log information. But... for one of them this is
-obsolete. Can you guess which one?
+So only log when something unexpected has happened that you need to deal with in your 
+application!
 
 Note: do not add log statements for debugging purposes. Write unit/integration tests instead
 and start tracing from your IDE! This will speed up your development by a factor 1000!!!
-
 
 # And...
 
 ## 13. Handle access denied exceptions
 
-This example application has an admin resource (that doesn't really do anything :)) but you need
-to be authenticated and have an ADMIN role to access it.
+To make sure that the response of our REST API is compliant with our domain model we need to make
+sure we handle the authorization exceptions that can occur.
 
-What happens when the authorization fails when you call that resource? Will it give you a nice
-JSON response back... or... an HTML file? 
+Since we have a Spring application in this example, we can configure Spring Security to use
+a specific error handler. In this example we have configured such an error handler in the `SecurityConfiguration`
+configuration class. 
 
 ## 14. Handle method level security
 
@@ -282,6 +272,12 @@ It is possible to apply security policies to methods (as example by using the @S
 
 Instead of letting the default Spring error handling kick in, it makes sense again to get some 
 control over the responses.
+
+Since these exceptions occur within the context of our REST resource we can use the exception-handler
+class as discussed earlier to handle these.
+
+In this example we added a handler for the `AccessDeniedException` exception in the 
+ `PersonResourceExceptionHandler` class.`
 
 # And...
 

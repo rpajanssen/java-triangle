@@ -53,9 +53,12 @@ public class DBPersonDAO implements PersonDAO<Person>{
 
     // NOTE : example 5 - Using high level HTTP code at wrong abstraction level
     // NOTE : example 8 - Throwing generic exceptions
+    // NOTE : example 12 - Logging errors for handled exceptions that are not your responsibility
     @Override
     public void update(Person person) throws Exception {
         if(!existsById(person.getId())) {
+            logger.error("error updating a person since it does not exist : " + person);
+
             throw new Exception(String.valueOf(HttpStatus.NOT_FOUND.value()));
         }
 

@@ -132,9 +132,9 @@ The drawback is that you get a deep stack trace and it becomes difficult to figu
 out what was the root cause of the exception, either by reading the code or by trying to 
 analyse the stack trace.
 
-The solution is to throw a different original exception or catch the thrown exception in 
-the location where you handle the exceptions and skip the catching it as we did in the 
-example code.
+The solution is to throw a different original exception or catch the thrown exception 
+only in the location where you handle the exceptions and skip the catching it as we did in 
+the example code.
 
 Catch-transform-and-rethrow is NOT handling it!
 

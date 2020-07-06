@@ -6,6 +6,7 @@ import com.example.exceptionhandling.domain.api.ErrorResponse;
 import com.example.exceptionhandling.domain.api.Person;
 import com.example.exceptionhandling.exceptions.ErrorCodes;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -53,6 +54,13 @@ public class PersonResourceExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     ErrorResponse<Person> validationExceptionHandler(MethodArgumentNotValidException exception) {
         return new ErrorResponse<>((Person)exception.getBindingResult().getTarget(), ErrorCodes.PERSON_INVALID.getCode());
+    }
+
+    @ResponseBody
+    @ExceptionHandler({ AccessDeniedException.class })
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    ErrorResponse<Person> handleAccessDeniedException(AccessDeniedException ex) {
+        return new ErrorResponse<>(ErrorCodes.ACCESS_DENIED.getCode());
     }
 
     /**

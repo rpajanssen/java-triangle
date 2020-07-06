@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 
-// NOTE : example 13 - Handle access denied to resources exceptions
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -20,6 +19,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/admin","/api/admin/demo").hasAnyRole("ROLE_ADMIN")
                 .and().cors().and().csrf().disable();
 
+        // todo : return ErrorResponse
         http
                 .exceptionHandling()
                 .authenticationEntryPoint((request, response, e) ->

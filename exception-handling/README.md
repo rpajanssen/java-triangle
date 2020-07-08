@@ -3,7 +3,7 @@
 This example project will demonstrate good and bad examples of exception handling in your REST 
 resources.
 
-The **before** examples has some code with common occurring mistakes. The **after** examples
+The **before** module has example code with common occurring mistakes. The **after** module
 addresses these mistakes. 
 
 # Requirements
@@ -13,12 +13,14 @@ addresses these mistakes.
 
 # TL;DR
 
-Just run all tests, navigate to the before/after folder and run: `mvn clean test`
+To run all tests run: `mvn clean test`
 
-Note: for the integration tests we use SpringCloudContract to generate the tests before they 
-are run by maven as a regular unit test. The generated tests can be found in `<module>\target\generated-test-sources`.
+Note: for the integration tests we use Spring cloud-contract. The test will be generated based
+on contracts after which they will be run. The generated tests can be found in `<module>\target\generated-test-sources`.
+If you mark this folder as a test-resources folder in your IDE then you run the generated tests 
+from you IDE like regular unit tests (useful for debugging/tracing).
 
-For more on integration testing examples see: https://p-bitbucket.nl.eu.abnamro.com:7999/projects/COESD/repos/devcon2019
+For more on integration testing see: https://p-bitbucket.nl.eu.abnamro.com:7999/projects/COESD/repos/devcon2019
 
 # Links
 

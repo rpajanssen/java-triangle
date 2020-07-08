@@ -1,6 +1,7 @@
 # What?
 
-This example project will demonstrate some bad exception handling in your REST resources.
+This example project will demonstrate how to resolve the bad exception handling examples 
+given the the **before** project.
 
 # Requirements
 
@@ -11,25 +12,10 @@ This example project will demonstrate some bad exception handling in your REST r
 
 Just run all tests: `mvn clean test`
 
-Note: for the integration tests we use SpringCloudContract to generate the tests before they 
-are run by maven as a regular unit test. The generated tests can be found in `target\generated-test-sources`.
-
-# What?
-
-This example project will demonstrate how to fix the bad exception handling examples given 
-in the **before** project.
-
-# Requirements
-
-* Maven 3.6.1 (or higher)
-* Java 11 (or higher)
-
-# TL;DR
-
-Just run all tests: `mvn clean test`
-
-Note: for the integration tests we use SpringCloudContract to generate the tests before they 
-are run by maven as a regular unit test.
+Note: for the integration tests we use Spring cloud-contract. The test will be generated based
+on contracts after which they will be run. The generated tests can be found in `target\generated-test-sources`.
+If you mark this folder as a test-resources folder in your IDE then you run the generated tests 
+from you IDE like regular unit tests (useful for debugging/tracing).
 
 # So... how have we solved the issues?
 

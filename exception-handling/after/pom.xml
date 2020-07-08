@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>com.abnamro.coesd.javatriangle</groupId>
@@ -9,74 +9,25 @@
         <version>1.0.0</version>
     </parent>
 
-	<artifactId>exceptionhandling-examples-after</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
-	<name>exception-handling-examples-after</name>
-  <packaging>jar</packaging>
+    <artifactId>exceptionhandling-examples-after</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>exception-handling-examples-after</name>
+    <packaging>jar</packaging>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>11</java.version>
 
-        <spring-boot.version>2.3.0.RELEASE</spring-boot.version>
-        <spring-cloud.version>Hoxton.SR5</spring-cloud.version>
-        <spring-cloud-contract.version>2.2.3.RELEASE</spring-cloud-contract.version>
-
-        <!-- todo : cleanup versions -->
-        <rest-assured.version>3.3.0</rest-assured.version>
-        <!--  <rest-assured.version>4.3.1</rest-assured.version> -->
-        <junit.jupiter.version>5.5.0</junit.jupiter.version>
-        <rider-spring.version>1.7.2</rider-spring.version>
-
-        <spring.fox.version>2.9.2</spring.fox.version>
-
-        <surefire.maven.plugin.version>2.22.2</surefire.maven.plugin.version> <!-- 3.0.0-M4 -->
-
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-	</properties>
-
-	<dependencyManagement>
-		<dependencies>
-            <!-- START dependency management for Spring Boot -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-contract-dependencies</artifactId>
-                <version>${spring-cloud-contract.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!-- END dependency management for Spring Boot -->
-		</dependencies>
-	</dependencyManagement>
-
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
@@ -101,14 +52,6 @@
                     <groupId>junit</groupId>
                     <artifactId>junit</artifactId>
                 </exclusion>
-                <exclusion>
-                    <groupId>io.rest-assured</groupId>
-                    <artifactId>rest-assured</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>io.rest-assured</groupId>
-                    <artifactId>rest-assured-common</artifactId>
-                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -117,13 +60,6 @@
             <version>5.3.3.RELEASE</version>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>io.rest-assured</groupId>-->
-<!--            <artifactId>spring-web-test-client</artifactId>-->
-<!--            <version>4.3.1</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
-
 
         <dependency>
             <groupId>javax.validation</groupId>
@@ -141,18 +77,10 @@
             <version>6.1.5.Final</version>
         </dependency>
 
-        <!-- note: enabling the devtools - like for auto-reloads -  might cause the connection to the in-memory
-             database to close premature resulting in test failures -->
-        <!--dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
-		</dependency-->
-		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.github.database-rider</groupId>
@@ -165,17 +93,17 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>${spring.fox.version}</version>
+            <version>2.10.5</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>${spring.fox.version}</version>
+            <version>2.10.5</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-bean-validators</artifactId>
-            <version>${spring.fox.version}</version>
+            <version>2.10.5</version>
         </dependency>
         <!-- END - swagger requirements -->
 
@@ -206,7 +134,7 @@
                 </exclusion>
                 <exclusion>
                     <groupId>io.rest-assured</groupId>
-                    <artifactId>rest-assured-common</artifactId>
+                    <artifactId>spring-mock-mvc</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -226,11 +154,10 @@
         </dependency>
         <dependency>
             <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured-common</artifactId>
+            <artifactId>spring-mock-mvc</artifactId>
             <version>${rest-assured.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- todo : these two dependencies are required because of error in spring-boot bom -->
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>json-path</artifactId>
@@ -246,13 +173,13 @@
         <!-- END rest-assured dependencies -->
     </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
-			</plugin>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot-maven-plugin.version}</version>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -350,6 +277,6 @@
                     </baseClassMappings-->
                 </configuration>
             </plugin>
-		</plugins>
-	</build>
+        </plugins>
+    </build>
 </project>

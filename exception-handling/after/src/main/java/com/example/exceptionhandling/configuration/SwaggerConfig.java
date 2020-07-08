@@ -10,7 +10,7 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 import java.util.Collections;
 
@@ -21,7 +21,7 @@ import java.util.Collections;
  * For more information on additional configuration options... ask the Google!
  */
 @Configuration
-@EnableSwagger2
+@EnableSwagger2WebMvc
 @Import({BeanValidatorPluginsConfiguration.class})
 public class SwaggerConfig {
     private static final String BASE_PACKAGE = "com.example.examples.rest.resources";

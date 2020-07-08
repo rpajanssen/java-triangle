@@ -326,4 +326,6 @@ curl --header "Content-Type: application/json" \
 
 curl http://localhost:8080/api/admin/demo 
 
+## Trigger annoying filter
 
+curl -H "DumbHeader: whatever" http://localhost:8080/api/person

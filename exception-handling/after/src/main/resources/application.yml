@@ -8,6 +8,10 @@ management:
 #        exclude: "*"
 #      base-path: "/"
 
+server:
+  error:
+    path: /error
+
 spring:
   banner:
     location: banner.txt

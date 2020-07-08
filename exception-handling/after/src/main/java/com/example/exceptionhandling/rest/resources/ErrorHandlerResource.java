@@ -2,6 +2,7 @@ package com.example.exceptionhandling.rest.resources;
 
 import com.example.exceptionhandling.domain.api.ErrorResponse;
 import com.example.exceptionhandling.exceptions.ErrorCodes;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +25,15 @@ public class ErrorHandlerResource implements ErrorController {
     private static final String PROPERTY_STATUS_CODE = "javax.servlet.error.status_code";
     private static final String PROPERTY_EXCEPTION  = "javax.servlet.error.exception";
 
+    @Value("${server.error.path}")
+    private String path;
+
     @Override
     public String getErrorPath() {
-        return "/error";
+        return path;
     }
 
-    @RequestMapping(value = "/error", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/error", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ErrorResponse> jsonError(HttpServletRequest request) {
         Integer statusCode = (Integer) request.getAttribute(PROPERTY_STATUS_CODE);
         Exception exception = (Exception) request.getAttribute(PROPERTY_EXCEPTION);

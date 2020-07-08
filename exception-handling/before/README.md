@@ -193,10 +193,11 @@ control over the responses.
 
 # And...
 
-Always have automated (integration)tests validating the exception scenarios!
+Always have automated (integration)tests validating the exception scenarios! Right now in this
+example we only test the happy flows.
 
 
-# Resource calls
+# Example resource calls
 
 ## Valid person calls
 

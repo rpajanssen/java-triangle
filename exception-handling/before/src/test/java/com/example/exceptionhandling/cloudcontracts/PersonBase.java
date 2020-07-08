@@ -42,7 +42,7 @@ import org.springframework.web.context.WebApplicationContext;
 @ActiveProfiles(AvailableProfiles.LOCAL)
 @DBRider
 @DataSet(value = "persons.yml", cleanBefore = true, cleanAfter = true, strategy = SeedStrategy.CLEAN_INSERT)
-public abstract class PersonWiredBase {
+public abstract class PersonBase {
     private static final String BASE_URL = "http://localhost";
 
     @LocalServerPort

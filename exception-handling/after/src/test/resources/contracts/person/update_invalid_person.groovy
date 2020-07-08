@@ -1,9 +1,9 @@
-package contracts.person.wired
+package contracts.person
 
 import org.springframework.cloud.contract.spec.Contract
 
 Contract.make {
-    description "should not update a person that does not exist"
+    description "should not update a person with invalid data"
 
     request {
         url "/api/person"
@@ -13,21 +13,21 @@ Contract.make {
         }
         body (
                 id: 25,
-                firstName: "Johnie",
+                firstName: "",
                 lastName: "Hacker"
         )
     }
 
     response {
-        status NOT_FOUND()
+        status BAD_REQUEST()
         headers {
             contentType applicationJson()
         }
         body([
-                code: '0010',
+                code: '0020',
                 data: [
                         id: 25,
-                        firstName: 'Johnie',
+                        firstName: '',
                         lastName: 'Hacker'
                 ]
         ])

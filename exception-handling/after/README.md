@@ -281,9 +281,10 @@ In this example we added a handler for the `AccessDeniedException` exception in 
 
 # And...
 
-Always have automated (integration)tests validating the exception scenarios!
+Always have automated (integration)tests validating the exception scenarios! We added these
+test scenarios to the contracts.
 
-# Resource calls
+# Example resource calls
 
 ## Valid person calls
 
@@ -339,8 +340,4 @@ curl --header "Content-Type: application/json" \
 
 curl http://localhost:8080/api/admin/demo 
 
-# Links
 
-https://www.baeldung.com/exception-handling-for-rest-with-spring
-https://thepracticaldeveloper.com/2019/09/09/custom-error-handling-rest-controllers-spring-boot/
-https://www.toptal.com/java/spring-boot-rest-api-error-handling

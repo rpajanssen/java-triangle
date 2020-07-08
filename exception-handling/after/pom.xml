@@ -22,7 +22,9 @@
         <spring-cloud.version>Hoxton.SR5</spring-cloud.version>
         <spring-cloud-contract.version>2.2.3.RELEASE</spring-cloud-contract.version>
 
+        <!-- todo : cleanup versions -->
         <rest-assured.version>3.3.0</rest-assured.version>
+        <!--  <rest-assured.version>4.3.1</rest-assured.version> -->
         <junit.jupiter.version>5.5.0</junit.jupiter.version>
         <rider-spring.version>1.7.2</rider-spring.version>
 
@@ -109,6 +111,19 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <version>5.3.3.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.rest-assured</groupId>-->
+<!--            <artifactId>spring-web-test-client</artifactId>-->
+<!--            <version>4.3.1</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+
 
         <dependency>
             <groupId>javax.validation</groupId>

@@ -1,0 +1,20 @@
+Presentation
+
+- discuss before-code
+- start before app and execute example calls
+
+- run all before tests with coverage (90/73/71)
+  - mvn clean test
+  - run dao test with coverage
+  - run generated test with coverage
+
+
+- discuss after-code
+- start after app and execute example calls
+
+- run all after tests with coverage (94/63/63)
+  - mvn clean test
+  - run dao test with coverage
+  - run generated test with coverage
+
+

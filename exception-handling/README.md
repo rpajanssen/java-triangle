@@ -1,6 +1,7 @@
 # What?
 
-This example project will demonstrate good and bad exceptionhandling in your REST resources.
+This example project will demonstrate good and bad examples of exception handling in your REST 
+resources.
 
 The **before** examples has some code with common occurring mistakes. The **after** examples
 addresses these mistakes. 
@@ -12,22 +13,15 @@ addresses these mistakes.
 
 # TL;DR
 
-Just run all tests: `mvn clean test`
+Just run all tests, navigate to the before/after folder and run: `mvn clean test`
 
 Note: for the integration tests we use SpringCloudContract to generate the tests before they 
 are run by maven as a regular unit test. The generated tests can be found in `<module>\target\generated-test-sources`.
 
 For more on integration testing examples see: https://p-bitbucket.nl.eu.abnamro.com:7999/projects/COESD/repos/devcon2019
 
-# Tips
+# Links
 
-see: https://stackoverflow.com/questions/107701/how-can-i-remove-ds-store-files-from-a-git-repository
-
-
-find . -name .DS_Store -print0 | xargs -0 git rm -f --ignore-unmatch
-
-add to .gitignore:
-.DS_Store
-
-git add .gitignore
-git commit -m '.DS_Store banished!'
+https://www.baeldung.com/exception-handling-for-rest-with-spring
+https://thepracticaldeveloper.com/2019/09/09/custom-error-handling-rest-controllers-spring-boot/
+https://www.toptal.com/java/spring-boot-rest-api-error-handling

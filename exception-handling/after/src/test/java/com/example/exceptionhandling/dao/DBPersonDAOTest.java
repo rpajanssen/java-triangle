@@ -166,7 +166,7 @@ class DBPersonDAOTest {
         assertThatExceptionOfType(PersonNotFoundException.class)
                 .isThrownBy(() -> {
                     underTest.update(nonExistingPerson);
-                }).withMessage("404");
+                }).withMessage("person does not exit");
     }
 
     @Test

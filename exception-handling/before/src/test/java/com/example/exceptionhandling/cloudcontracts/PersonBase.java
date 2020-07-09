@@ -19,7 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 /**
  * CDC: (see the pom.xml for additional documentation) This is a base test class that will be extended by all generated
- * classes derived from the contracts in the "/resources/contracts/person/wired" folder.
+ * classes derived from the contracts in the "/resources/contracts/person" folder.
  *
  * It will run a fully wired app!!! Since you can only specify the test method once for the complete mvn project/module -
  * see the pom.xml documentation - we know that spring-cloud-contract will generated tests that will run with mock-mvc!

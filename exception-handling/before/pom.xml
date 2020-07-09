@@ -224,11 +224,8 @@
                         by name conventions. With the packageWithBaseClasses-property we configure the base package
                         were (all) our abstract test-classes can be found. The contracts are read from the
                         "/resources/contracts" folder and the subfolder structure the contracts are in define the name
-                        of the abstract test-class to be used. As example we have a subfolder structure of "person/mocked"
-                        that holds our contracts, then the base class that will be used is PersonMockedBase.
-
-                        Note that normally you won't have a "mocked" or  "wired" folder, we have these just to be
-                        able to show you how you can have a mocked and/or wired test.
+                        of the abstract test-class to be used. As example we have a subfolder structure of "person"
+                        that holds our contracts, then the base class that will be used is PersonBase.
                      -->
                     <packageWithBaseClasses>com.example.exceptionhandling.cloudcontracts</packageWithBaseClasses>
 

@@ -46,7 +46,9 @@ And again you may want to have more control over the response as described in ex
 ## 3. Missing error-handling resource
 
 There are still other exception scenarios. What if a rate limiter blocked access to a resource?
-Or another unhandled exception occurred? Then Spring will will redirect to an error resource!
+What if you have a bug in your exception-handler class (@ControllerAdvice) resulting in a new
+unexpected exception? Or another unhandled exception occurred? Then Spring will will redirect 
+to an error resource!
 
 But if you don't take over... you can't control the response! 
 

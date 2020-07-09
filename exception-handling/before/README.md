@@ -17,6 +17,12 @@ on contracts after which they will be run. The generated tests can be found in `
 If you mark this folder as a test-resources folder in your IDE then you run the generated tests 
 from you IDE like regular unit tests (useful for debugging/tracing).
 
+Note: we configured Spring cloud-contract to generate tests that make use of Springs own MockMVC.
+Which sounds great... it is all Spring... so... all will work! But... MockMVC has its drawbacks 
+as well. As we shall see, this example application has a servlet filter and we would like to
+be able to test that as well using Spring cloud-contract. But... we can't using MockMVC! In the
+**after** module we will show you a different approach!
+
 # So... what is wrong with it?
 
 ## 1. Missing REST resource error handling
@@ -200,6 +206,8 @@ control over the responses.
 
 Always have automated (integration)tests validating the exception scenarios! Right now in this
 example we only test the happy flows.
+
+Don't be afraid to switch testing frameworks if you need to!
 
 
 # Example resource calls

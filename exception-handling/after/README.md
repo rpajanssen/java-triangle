@@ -17,6 +17,20 @@ on contracts after which they will be run. The generated tests can be found in `
 If you mark this folder as a test-resources folder in your IDE then you run the generated tests 
 from you IDE like regular unit tests (useful for debugging/tracing).
 
+Note: we switched to a RestEasy JAX-RS client in our generated tests instead of using Springs MockMVC.
+This as example enables us to write/generate unit tests that can test the behavior of servlet filters,
+something we could not do in the **before** example that uses MockMVC.
+
+Just compare the base test classes in the **cloudcontracts** package to see the difference. Note
+how the base test classes using RestEasy instead of MockMVC are less complex and simpler. Also note
+that if we wanted to test the Spring security behavior we still would have to add additional
+configuration to the MockMVC setup (like adding a Spring security MockMVC configurer). Also the pom 
+has cleaned up nicely. No longer do we need to worry about mistakes in the Spring BOM. We no longer 
+have to manually override and import RestAssured dependencies and we no longer need the Spring 
+security test dependency. It is all cleaner and neater using RestEasy instead of Spring MockMVC.
+
+To see what the **after** module looked like using MockMVC, checkout the tag _MOCKMVC_ from git.
+
 # So... how have we solved the issues?
 
 ## 1. REST resource error handling
@@ -270,6 +284,10 @@ In this example we added a handler for the `AccessDeniedException` exception in 
 
 Always have automated (integration)tests validating the exception scenarios! We added these
 test scenarios to the contracts.
+
+Note that we switched from using Springs MockMVC to a Rest-Easy client in our tests to be able
+to test the full set of features our application has on offer, like testing the behavior of
+servlet filters.
 
 # Example resource calls
 

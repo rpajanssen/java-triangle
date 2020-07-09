@@ -53,12 +53,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <version>5.3.3.RELEASE</version>
-            <scope>test</scope>
-        </dependency>
 
         <dependency>
             <groupId>javax.validation</groupId>
@@ -144,32 +138,13 @@
         </dependency>
         <!-- END spring cloud contract test dependencies -->
 
-        <!-- START rest-assured dependencies -->
+        <!-- since we use the JAXRSCLIENT option for SpringCloudContract we need to import a JaxRS client -->
         <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>${rest-assured.version}</version>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-client</artifactId>
+            <version>3.6.2.Final</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>spring-mock-mvc</artifactId>
-            <version>${rest-assured.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>json-path</artifactId>
-            <version>${rest-assured.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>xml-path</artifactId>
-            <version>${rest-assured.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- END rest-assured dependencies -->
     </dependencies>
 
     <build>
@@ -235,12 +210,13 @@
                         set of test using the web-test client since you can only specify this setting once for the whole
                         project/module!
 
-                        In this project we do have mocked and wired generated test, while using the default MOCKMVC
-                        test-method. We implemented a base test class that wires the complete app and then passes the
-                        application context to springs RestAssuredMockMvc to make all the beans available to the mocked
-                        environment of the generated tests. Note that this NOT how you should be doing it!
+                        In this project we also want to verify the behavior of servlet filters so we can't use MOCKMVC!
+                        Using the JX-RS Client the filters will be executed and we can write tests for them. We can also
+                        cleanup the pom a lot by excluding all rest-assureed dependencies anf we don't have to worry
+                        anymore about mistakes made in the Spring BOM regarding these dependencies. We only need to add
+                        one rest-easy client dependency and modify our base test classes to instantiate a WebTarget.
                     -->
-                    <testMode>MOCKMVC</testMode>
+                    <testMode>JAXRSCLIENT</testMode>
 
                     <!--
                         CDC: To bind the contracts to an abstract test-class that sets up the wiring we have three
@@ -248,11 +224,8 @@
                         by name conventions. With the packageWithBaseClasses-property we configure the base package
                         were (all) our abstract test-classes can be found. The contracts are read from the
                         "/resources/contracts" folder and the subfolder structure the contracts are in define the name
-                        of the abstract test-class to be used. As example we have a subfolder structure of "person/mocked"
-                        that holds our contracts, then the base class that will be used is PersonMockedBase.
-
-                        Note that normally you won't have a "mocked" or  "wired" folder, we have these just to be
-                        able to show you how you can have a mocked and/or wired test.
+                        of the abstract test-class to be used. As example we have a subfolder structure of "person"
+                        that holds our contracts, then the base class that will be used is PersonBase.
                      -->
                     <packageWithBaseClasses>com.example.exceptionhandling.cloudcontracts</packageWithBaseClasses>
 

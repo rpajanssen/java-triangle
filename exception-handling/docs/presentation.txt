@@ -8,6 +8,8 @@ Presentation
   - run dao test with coverage
   - run generated test with coverage
 
+- modify exception-handler and restart to demo resource error-handler
+
 
 - discuss after-code
 - start after app and execute example calls
@@ -17,4 +19,4 @@ Presentation
   - run dao test with coverage
   - run generated test with coverage
 
-
+- modify exception-handler and restart to demo resource error-handler

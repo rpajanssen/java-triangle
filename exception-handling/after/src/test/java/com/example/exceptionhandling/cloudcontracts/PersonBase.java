@@ -2,25 +2,22 @@ package com.example.exceptionhandling.cloudcontracts;
 
 import com.example.exceptionhandling.AvailableProfiles;
 import com.example.exceptionhandling.FantasticSpringbootApplication;
+import com.example.exceptionhandling.rest.RestClient;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.SeedStrategy;
 import com.github.database.rider.spring.api.DBRider;
-import io.restassured.RestAssured;
-import io.restassured.module.mockmvc.RestAssuredMockMvc;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.web.context.WebApplicationContext;
+
+import javax.ws.rs.client.WebTarget;
 
 /**
  * CDC: (see the pom.xml for additional documentation) This is a base test class that will be extended by all generated
- * classes derived from the contracts in the "/resources/contracts/person/wired" folder.
+ * classes derived from the contracts in the "/resources/contracts/person" folder.
  *
  * It will run a fully wired app!!! Since you can only specify the test method once for the complete mvn project/module -
  * see the pom.xml documentation - we know that spring-cloud-contract will generated tests that will run with mock-mvc!
@@ -44,27 +41,21 @@ import org.springframework.web.context.WebApplicationContext;
 @DBRider
 @DataSet(value = "persons.yml", cleanBefore = true, cleanAfter = true, strategy = SeedStrategy.CLEAN_INSERT)
 public abstract class PersonBase {
-    private static final String BASE_URL = "http://localhost";
+    private static final String HOST = "localhost";
 
     @LocalServerPort
     private int port;
 
-    @Autowired
-    protected WebApplicationContext context;
+    private RestClient restClient;
+
+    // Using the JAX-RS test mode Spring Cloud Contract will generate integration test that use a WebTarget. Our
+    // base class need to provide an instance.
+    protected WebTarget webTarget;
 
     @BeforeEach
     public void setup() {
-        // Using the MOCK test mode Spring Cloud Contract will generate integration test that use a MockMvc and
-        // RestAssured. Our base class needs to setup this environment.
+        restClient = new RestClient(HOST, port);
 
-        RestAssured.baseURI = BASE_URL;
-        RestAssured.port = port;
-
-        RestAssuredMockMvc.webAppContextSetup(context, SecurityMockMvcConfigurers.springSecurity());
-    }
-
-    @AfterEach
-    public void cleanup() {
-        RestAssuredMockMvc.reset();
+        webTarget = restClient.target();
     }
 }

@@ -6,6 +6,11 @@ resources.
 The **before** module has example code with common occurring mistakes. The **after** module
 addresses these mistakes. 
 
+The branch _no-inline-documentation_ has inline javadoc removed from the code so we don't have 
+visible spoilers during a presentation and we can apply a mob-review approach.
+
+The tag _MOCKMVC_ shows the **after** module code using MOCKMVC.
+
 # Requirements
 
 * maven 3.6.1 (or higher)

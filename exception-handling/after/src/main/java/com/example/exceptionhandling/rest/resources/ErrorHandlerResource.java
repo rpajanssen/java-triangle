@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletRequest;
  * execution flow has returned from the REST Resource. Exceptions will then NOT be handled by a (global) exception
  * handler.
  *
- * As example when Zuul blocks the calls to a resource by use of the RateLimitPreFilter these blocked calls will result
- * in a redirect to this error path.
+ * An is when you have a bug in your exception-handler class (@ControllerAdvice) resulting in a new
+ * unexpected exception thrown from that class.
  */
 @RestController
 public class ErrorHandlerResource implements ErrorController {

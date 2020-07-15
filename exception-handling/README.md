@@ -109,7 +109,8 @@ of your resource.
 
 _Our advice: with a bit of luck, using this library, you will comply with the ABN AMRO error response standard. But of 
 course you don't want to depend on luck so please pressure the team responsible for this component to fix the API error
-response domain model. And be aware that custom exceptions may lead to unwanted error response http status codes!_
+response domain model. And be aware that custom exceptions may lead to unwanted error response http status codes if you 
+leave it up to the provided exception handler! Note that you can still write your own exception handler for these!_
 
 ### Some findings (not all!)
 

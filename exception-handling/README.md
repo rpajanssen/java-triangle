@@ -63,6 +63,9 @@ And are really all exceptions being handled? What about an exception occurring i
 What will your application return when an exception occurs in in there? Do you have control over the handling of these
 exceptions using this library? Most likely not!
 
+Another drawback of this library is that it has multiple responsibilities. Error handling is just one of them. Decorating
+requests for observability purposes is another. If you would only want the error handling... that is nit possible.
+
 _Our advice: write your own custom JAX-RS exception mapper and keep your resources free from boilerplate and... be compliant
 with ABN AMRO standards._
 
@@ -96,16 +99,23 @@ with the ABN AMRO error response standard, but you depend on how the serializer 
 implementation. This is because the domain API for the error response is only half implemented and for the missing
 part a Map is used and... fingers crossed!
 
-A generic exception handler (`ControllerAdvice`) has been implemented. And it tries to cover all possible options
-to return a proper response. As long as you use the libraries that are supported by the generic handler (it handles the
-all the possible exceptions of the library you use in the correct way) it will create the proper error response. The
-same is true for using `AABExceptions`. Only custom exceptions not extending AABExceptions are not supported!
+A generic exception handler (`ControllerAdvice`) has been implemented. And it covers a specific set of exceptions
+to return a proper response. As long as you use the libraries that are supported by the generic handler it will create 
+the proper error response. The same is true for using `AABExceptions`. However security exceptions are not covered like
+the `AccessDeniedException`. And custom exceptions not extending AABExceptions are not supported as well! So these 
+exceptions may result in a wrong error response if left up to this generic handler.
 
 Another improvement over the JAX-RS equivalent library is that the handler does not support `ResponseStatusException` -
 the equivalent of the `WebApplicationException` - and thus it is not mixing these two different concepts.
 
-As a fall back it also implement a custom error resource, which should cover all exceptions raised outside the context
-of your resource.
+As a fall back this library also implements a custom error resource, which should cover all exceptions raised outside 
+the context of your resource. Be careful because this resource however does not cover all possible security exceptions 
+being raised so a wrong error response could be returned when these exceptions are raised.
+
+A major drawback of this library is that it has multiple responsibilities. Error handling is just one of them. Decorating
+requests for observability purposes is another. So if you want to use this library to handle exceptions but you want to 
+use an open standard like OpenTelemetry for observability to send data to Azure AppInsights or Zipkin... well you are 
+in trouble!
 
 _Our advice: with a bit of luck, using this library, you will comply with the ABN AMRO error response standard. But of 
 course you don't want to depend on luck so please pressure the team responsible for this component to fix the API error
@@ -117,8 +127,12 @@ leave it up to the provided exception handler! Note that you can still write you
 - **domain of the REST error response only half implemented so you depend on luck to be compliant with ABN AMRO error
   response standards**
 - **the ControllerAdvice is annotated as RestController (a bug)**
+- **the GenericErrorHandler - which is a error resource - is annotated with Controller instead of RestController**
+- **the GenericErrorHandler does not cover all security exceptions since it only checks for unauthorized status code and
+  not for the forbidden status code** 
 - **does not use a observability standards (tracing) like OpenTelemetry (how is this integrated with OpenTelemetry servers
   like Azure AppInsights, Jeager, Zipkin, ...)**    
+- **library has to many responsibilities and might prevent you from complying with upcoming observability standards**  
 - code needs to be cleaned up 
   - correct functionality depending on hidden side effects of methods
   - mixing injection methods

@@ -128,7 +128,8 @@ own exception handler for these!_
 - **domain of the REST error response only half implemented so you depend on luck to be compliant with ABN AMRO error
   response standards**
 - **the ControllerAdvice is annotated as RestController (a bug)**
-- **the GenericErrorHandler - which is a error resource - is annotated with Controller instead of RestController**
+- **the ControllerAdvice doesn't handle AccessDeniedExceptions**
+- **the GenericErrorHandler - which is an error resource - is annotated with Controller instead of RestController**
 - **the GenericErrorHandler does not cover all security exceptions since it only checks for unauthorized status code and
   not for the forbidden status code** 
 - **does not use a observability standards (tracing) like OpenTelemetry (how is this integrated with OpenTelemetry servers

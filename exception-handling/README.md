@@ -157,3 +157,4 @@ own exception handler for these!_
 https://www.baeldung.com/exception-handling-for-rest-with-spring
 https://thepracticaldeveloper.com/2019/09/09/custom-error-handling-rest-controllers-spring-boot/
 https://www.toptal.com/java/spring-boot-rest-api-error-handling
+https://dennis-xlc.gitbooks.io/restful-java-with-jax-rs-2-0-en/cn/part1/chapter7/exception_handling.html

@@ -159,14 +159,13 @@ circular dependencies.
 In this example we fixed the problem by not returning an HTTP error code. If this exception
 results in an HTTP response with a certain code, it is up to the resource/exception-handler.
 
-## 6. Using low level code at wrong higher abstraction level
+## 6. Assuming implementation details
 
 In the _before_ example in the `PersonCrudResource` in the method _updatePerson(Person person)_
 we wrote some code to handle exceptions. In that resource we caught a _PersistenceException_.
 But... the resource can't possibly know this exception can be thrown. It is not aware which
 low level persistence layer is being used. So this catch-block may even be a piece of dead 
-code. We also pull in persistence layer dependencies into the resource and we run a higher 
-risk of introducing circular dependencies.
+code.
 
 In this case we should remove the catch block for this exception. We did this anyway because 
 we implemented an exception-handler class. But if we had not it would be best to remove the 

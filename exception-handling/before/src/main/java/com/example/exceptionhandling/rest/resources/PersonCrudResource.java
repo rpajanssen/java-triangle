@@ -53,7 +53,7 @@ public class PersonCrudResource {
         }
     }
 
-    // NOTE : example 6 - Using low level code at wrong higher abstraction level
+    // NOTE : example 6 - Assuming implementation details
     // NOTE : example 10 - Unnecessary exception chaining
     // NOTE : example 12 - Logging errors for handled exceptions that are not your responsibility
     @PutMapping

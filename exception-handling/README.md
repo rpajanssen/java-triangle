@@ -136,7 +136,8 @@ own exception handler for these!_
   like Azure AppInsights, Jeager, Zipkin, ...)**    
 - **library has to many responsibilities and might prevent you from complying with upcoming observability standards**  
 - code needs to be cleaned up 
-  - correct functionality depending on hidden side effects of methods
+  - correct functionality depending on hidden side effects of methods (as example the actual setting of the response 
+    status code in the ResponseHelper)
   - mixing injection methods
   - package names : **generics** in Java has a specific meaning and it is always a bad idea to have your organizational 
     structure come back in the package structure... it should only be functional (we don't want everyone to refactor if 

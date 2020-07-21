@@ -11,6 +11,9 @@ visible spoilers during a presentation and we can apply a mob-review approach.
 
 The tag _MOCKMVC_ shows the **after** module code using MOCKMVC.
 
+Below we also discuss the ABN AMRO JAX-RS and SpringBoot support libraries, their design flaws/bugs and what you need 
+to take of of!
+
 # Requirements
 
 * maven 3.6.1 (or higher)

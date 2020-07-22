@@ -28,18 +28,4 @@ public enum ErrorCodes {
     public HttpStatus getHttpStatus() {
         return httpStatus;
     }
-
-    public static ErrorCodes fromHttpStatusCode(Integer statusCode) {
-        if(statusCode == null) {
-            return ErrorCodes.UNEXPECTED_EXCEPTION;
-        }
-
-        for(ErrorCodes code : values()) {
-            if(code.getHttpStatus().value() ==  statusCode) {
-                return code;
-            }
-        }
-
-        return ErrorCodes.UNEXPECTED_EXCEPTION;
-    }
 }

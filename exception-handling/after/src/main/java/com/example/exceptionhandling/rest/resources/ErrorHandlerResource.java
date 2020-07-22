@@ -1,6 +1,7 @@
 package com.example.exceptionhandling.rest.resources;
 
 import com.example.exceptionhandling.domain.api.ErrorResponse;
+import com.example.exceptionhandling.exceptions.CodedException;
 import com.example.exceptionhandling.exceptions.ErrorCodes;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  * execution flow has returned from the REST Resource. Exceptions will then NOT be handled by a (global) exception
  * handler.
  *
- * An is when you have a bug in your exception-handler class (@ControllerAdvice) resulting in a new
+ * An example is when you have a bug in your exception-handler class (@ControllerAdvice) resulting in a new
  * unexpected exception thrown from that class.
  */
 @RestController
@@ -33,16 +34,22 @@ public class ErrorHandlerResource implements ErrorController {
         return path;
     }
 
-    @RequestMapping(value = "/error", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "${server.error.path:/error}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ErrorResponse> jsonError(HttpServletRequest request) {
         Integer statusCode = (Integer) request.getAttribute(PROPERTY_STATUS_CODE);
         Exception exception = (Exception) request.getAttribute(PROPERTY_EXCEPTION);
 
-        // todo : it would be wise to log the exception information here as well
-
-        ErrorCodes errorCode = ErrorCodes.fromHttpStatusCode(statusCode);
+        ErrorCodes errorCode = deriveErrorCode(exception);
         ErrorResponse<?> errorResponse = new ErrorResponse<>(errorCode.getCode());
 
         return new ResponseEntity<>(errorResponse, errorCode.getHttpStatus());
+    }
+
+    private ErrorCodes deriveErrorCode(Exception exception) {
+        if(exception instanceof CodedException) {
+            return ((CodedException)exception).getErrorCode();
+        }
+
+        return ErrorCodes.UNEXPECTED_EXCEPTION;
     }
 }

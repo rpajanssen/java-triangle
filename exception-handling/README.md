@@ -153,8 +153,16 @@ own exception handler for these!_
   - magic strings/numbers
   - poor javadoc
   - using verbose/old/unclean coding techniques  
-- readme says its for a SpringBoot application, which is incorrect, it is for each Spring application based on SpringMVC
+- some SpringBoot specifics in this library like the implementation of an error resource, so no (full) support for a 
+  Spring application       
 
+## In general
+
+There is some support for SpringBoot applications. But the library may not work with Spring applications which is a
+miss. JAX-RS lib is not compliant. And of course no other framework is supported. What if you use Quarkus? Or any
+other framework. Most of the times it is better if you have a library that specifies the domain model, the error
+code mappings, maybe some specific exceptions but leave the handling up to the teams within the applications because
+you simply can't keep up with the frameworks.
 
 # Links
 

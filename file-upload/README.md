@@ -15,6 +15,14 @@ This module creates a deployment using the JAX-RS [RestEasy](https://resteasy.gi
 It also uses the maven shade-plugin to create a fat jar so you can deploy this application like you would with a 
 SpringBoot application. 
 
+## SpringBoot
+
+This module packages the application as a fat jar using [SpringBoot](https://spring.io/projects/spring-boot) and
+[RestEasy](https://resteasy.github.io/) as the JAX-RS implementation.
+
+It uses the **resteasy-spring-boot-starter** to integrate SpringBoot with RestEasy.
+
+
 # Requirements
 
 * maven 3.6.1 (or higher)

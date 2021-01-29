@@ -5,7 +5,6 @@ import com.example.domain.model.FormBuilder;
 
 import javax.inject.Named;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -20,7 +19,7 @@ import java.io.IOException;
 import static com.example.utils.FileUtils.*;
 
 /**
- * This resource excepts a request for a multipart form upload. It processed the raw request itself by gathering the
+ * This resource accepts a request for a multipart form upload. It processed the raw request itself by gathering the
  * parts and assemble them into a form (FormBuilder).
  *
  * Then we assume we have one form parameter "name" that holds the file-name and one form parameter "attachment" that
@@ -31,8 +30,7 @@ import static com.example.utils.FileUtils.*;
  */
 @Named
 @Path("/formupload")
-@MultipartConfig(location = "/tmp", maxFileSize = 35000000, maxRequestSize = 218018841, fileSizeThreshold = 0)
-public class FileUploadWithFormResource {
+public class FileUploadWithFormAndServletRequestResource {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)

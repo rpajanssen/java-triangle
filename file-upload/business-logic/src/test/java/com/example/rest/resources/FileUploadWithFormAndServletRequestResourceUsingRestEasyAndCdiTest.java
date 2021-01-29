@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * JAX-RS and CDI classes and by only listing the Application class the whole application will be setup.
  */
 @SuppressWarnings("Duplicates")
-class FileUploadWithFormResourceUsingRestEasyAndCdiTest {
+class FileUploadWithFormAndServletRequestResourceUsingRestEasyAndCdiTest {
     // use the rest-server that supports CDI
     private InMemoryCdiRestServer server;
     private RestClient restClient;
@@ -45,7 +45,7 @@ class FileUploadWithFormResourceUsingRestEasyAndCdiTest {
          * We will construct the resource we want to test ourselves and use the constructor also used for
          * constructor injection to inject the mocked DAO.
          */
-        FileUploadWithFormResource underTest = new FileUploadWithFormResource();
+        FileUploadWithFormAndServletRequestResource underTest = new FileUploadWithFormAndServletRequestResource();
         /*
          * We list the whole shebang of JAX-RS classes we want to wire for this test, resources, filters, interceptors,
          * exception-mappers... the whole shebang! We do not list CDI classes because they will not be supported by

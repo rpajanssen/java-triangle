@@ -5,6 +5,10 @@ This module packages the application as a fat jar using [SpringBoot](https://spr
 
 It uses the **resteasy-spring-boot-starter** to integrate SpringBoot with RestEasy.
 
+Unlike in the JAX-RS deployment were we needed to configure the Jetty server to accept multipart requests, the
+out-of-the-box configuration with the default server already has multipart configured so if the defaults are
+sufficient (what are the defaults?) then you are fine.
+
 ## Build en run
 
 - build   : ```mvn clean install```

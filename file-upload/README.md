@@ -22,6 +22,11 @@ This module packages the application as a fat jar using [SpringBoot](https://spr
 
 It uses the **resteasy-spring-boot-starter** to integrate SpringBoot with RestEasy.
 
+## Additional note
+
+In the deployments we need to configure the multipart setup up. One way to do this is to use the @MultipartConfig 
+annotation that youcan apply to a servlet implementation class like:
+```@MultipartConfig(location = "/tmp", maxFileSize = 35000000, maxRequestSize = 218018841, fileSizeThreshold = 0)```
 
 # Requirements
 
@@ -41,9 +46,9 @@ byte array property.
 
 Uploading a file by the client is nothing more than a api call passing a json as body.
 
-## FileUploadWithFormResource
+## FileUploadWithFormAndServletRequestResource
 
-Implementation of the file-upload that excepts a form submit with a file as attachment.
+Implementation of the file-upload that accepts a form submit with a file as attachment.
 
 Using this approach we have kept the resource implementation agnostic, bit you might need additional multipart 
 configuration setup. See deployment modules for the details depending on the deployment.
@@ -59,9 +64,37 @@ curl -X POST -H 'Content-type: application/json' \
           -d '{"attachment":"97329810197117116105102117108321001011091113210210510810110=","name":"MyFile.txt"}' \
           http://localhost:8080/api/upload
 
-## upload 2 : FileUploadWithFormResource
+or          
+          
+POST http://localhost:8080/api/upload
+Accept: application/json
+Content-Type: application/json
+
+{
+  "attachment": "97329810197117116105102117108321001011101113210210510810110=",
+  "name": "MyFile"
+}          
+
+## upload 2 : FileUploadWithFormAndServletRequestResource
 
 curl -X POST -H 'Accept: application/json' \
           -F 'name=MyFile.txt' \
-          -F 'attachment=@src/test/resources/test-input.txt' \
+          -F 'attachment=@business-logic/src/test/resources/test-input.txt' \
           http://localhost:8080/api/formupload
+
+
+or
+
+POST http://localhost:8080/api/formupload
+Accept: application/json
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="name"
+
+MyFile.txt
+--WebAppBoundary
+Content-Disposition: form-data; name="attachment"; filename="test-input.txt"
+
+< business-logic/src/test/resources/test-input.txt
+--WebAppBoundary--

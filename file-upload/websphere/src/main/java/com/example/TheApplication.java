@@ -39,6 +39,8 @@ public class TheApplication extends Application {
 	 * Configure the binding in order to support byte[] as properties to be serialized
 	 * arriving as a base64 encoded string.
 	 *
+	 * This configuration is NOT required for the form-upload.
+	 *
 	 * todo : doesn't work yet
 	 *
 	 */

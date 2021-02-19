@@ -1,8 +1,5 @@
 package com.example.domain.api;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ErrorResponse<T> {
     private T data;
     private String code;

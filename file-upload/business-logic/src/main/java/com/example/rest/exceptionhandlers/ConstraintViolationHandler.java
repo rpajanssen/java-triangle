@@ -23,7 +23,7 @@ public class ConstraintViolationHandler implements ExceptionMapper<ConstraintVio
     @Override
     public Response toResponse(ConstraintViolationException exception) {
         return Response.status(Response.Status.BAD_REQUEST)
-                .entity(new ErrorResponse(Response.Status.BAD_REQUEST.name(), ErrorCodes.FORM_INVALID.getCode()))
+                .entity(new ErrorResponse(ErrorCodes.FORM_INVALID.getCode(), Response.Status.BAD_REQUEST.name()))
                 .type(MediaType.APPLICATION_JSON_TYPE)
                 .build();
     }

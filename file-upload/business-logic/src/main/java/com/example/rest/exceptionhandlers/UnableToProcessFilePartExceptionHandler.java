@@ -17,7 +17,7 @@ public class UnableToProcessFilePartExceptionHandler implements ExceptionMapper<
     @Override
     public Response toResponse(UnableToProcessFilePartException exception) {
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                .entity(new ErrorResponse(Response.Status.INTERNAL_SERVER_ERROR.name(), ErrorCodes.UNABLE_TO_PROCESS_PART.getCode()))
+                .entity(new ErrorResponse(ErrorCodes.UNABLE_TO_PROCESS_PART.getCode(), Response.Status.INTERNAL_SERVER_ERROR.name()))
                 .type(MediaType.APPLICATION_JSON_TYPE)
                 .build();
     }

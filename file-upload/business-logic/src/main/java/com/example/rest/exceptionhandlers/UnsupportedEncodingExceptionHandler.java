@@ -23,7 +23,7 @@ public class UnsupportedEncodingExceptionHandler implements ExceptionMapper<Unsu
     @Override
     public Response toResponse(UnsupportedEncodingException exception) {
         return Response.status(Response.Status.BAD_REQUEST)
-                .entity(new ErrorResponse(Response.Status.BAD_REQUEST.name(), ErrorCodes.UNSUPPORTED_ENCODING.getCode()))
+                .entity(new ErrorResponse(ErrorCodes.UNSUPPORTED_ENCODING.getCode(), Response.Status.BAD_REQUEST.name()))
                 .type(MediaType.APPLICATION_JSON_TYPE)
                 .build();
     }

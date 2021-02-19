@@ -1,0 +1,42 @@
+# JAX-RS with Websphere deployment 
+
+We are using Liberty profile to locally deploy a WAS instance and run our
+application with a mvn command.
+
+# Available resources
+
+## FileUploadResource
+
+Requires no additional configuration.
+
+## FileUploadWithFormResource
+
+Requires the configuration for multipart request. We configured the servlet to support multipart
+requests in the ```web.xml``` :
+```
+    <servlet>
+        <servlet-name>com.example.TheApplication</servlet-name>
+
+        <multipart-config>
+            <max-file-size>100000</max-file-size>
+            <max-request-size>200000</max-request-size>
+            <file-size-threshold>50000</file-size-threshold>
+        </multipart-config>
+    </servlet>
+```
+
+## Build en run
+
+- build   : in root folder:  ```mvn clean package install```
+- run     : in websphere folder: ```mvn liberty:run```
+
+Demo api calls can be found in the main readme.
+
+
+# Interesting reads
+
+- https://www.ibm.com/support/knowledgecenter/SSEQTP_liberty/com.ibm.websphere.wlp.doc/ae/rwlp_feat.html
+- https://www.ibm.com/support/knowledgecenter/en/SSAW57_8.5.5/com.ibm.websphere.nd.multiplatform.doc/ae/twbs_jaxrs_configjaxrs11method.html
+- https://openliberty.io/guides/maven-intro.html#creating-the-project-pom-file
+- https://openliberty.io/guides/maven-intro.html
+- https://adambien.blog/roller/abien/entry/jax_rs_json_b_configuration

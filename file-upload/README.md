@@ -22,10 +22,10 @@ This module packages the application as a fat jar using [SpringBoot](https://spr
 
 It uses the **resteasy-spring-boot-starter** to integrate SpringBoot with RestEasy.
 
-## Webshere
+## Websphere
 
-This module showcases the file-upload running it locally using liberty profile on the latest Wbesphere that
-is compataible with Java 11. Note that Websphere 8.5.x uses some core code from the JVM (that it probably
+This module showcases the file-upload running it locally using liberty profile on the latest Websphere that
+is compatible with Java 11. Note that Websphere 8.5.x uses some core code from the JVM (that it probably
 shouldn't have) that are removed in Java 11 so it will never run using such a JVM.
 
 ## Additional note

@@ -2,7 +2,6 @@ package com.example.exceptions;
 
 import javax.ws.rs.core.Response;
 
-// todo
 public enum ErrorCodes {
     UNABLE_TO_PROCESS_PART("9991", Response.Status.INTERNAL_SERVER_ERROR),
 

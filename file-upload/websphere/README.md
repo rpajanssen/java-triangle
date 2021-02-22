@@ -7,7 +7,14 @@ application with a mvn command.
 
 ## FileUploadResource
 
-Requires no additional configuration.
+Requires some additional configuration for the JSON-B deserialization. In the application
+class we need to configure the deserializer so it understands that the byte[] object on the 
+Form class will be delivered as a base64 encoded string value property in the JSON
+body. 
+
+We also added some dependencies in the pom for this.
+
+TODO : this doesn't work yet!
 
 ## FileUploadWithFormResource
 

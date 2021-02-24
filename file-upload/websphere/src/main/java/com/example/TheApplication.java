@@ -40,9 +40,6 @@ public class TheApplication extends Application {
 	 * arriving as a base64 encoded string.
 	 *
 	 * This configuration is NOT required for the form-upload.
-	 *
-	 * todo : doesn't work yet
-	 *
 	 */
 	@Override
 	public Set<Object> getSingletons() {
@@ -61,7 +58,13 @@ public class TheApplication extends Application {
 	}
 
 	private Jsonb buildJsonB() {
-		JsonbConfig config = new JsonbConfig().withBinaryDataStrategy(BinaryDataStrategy.BASE_64_URL);
+		JsonbConfig config = new JsonbConfig()
+				// use the prefab binary data strategy to configure byte[] to be serialized as base64 encoded strings
+				.withBinaryDataStrategy(BinaryDataStrategy.BASE_64)
+				// to use the custom adapter incomment the line below and outcomment the binary data strategy configuration
+				//.withAdapters(new FormJsonBAdapter())
+				;
+
 		return JsonbBuilder.newBuilder().
 				withConfig(config).
 				build();

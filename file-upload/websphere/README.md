@@ -1,7 +1,6 @@
 # JAX-RS with Websphere deployment 
 
-We are using Liberty profile to locally deploy a WAS instance and run our
-application with a mvn command.
+We are using Liberty profile to locally deploy a WAS instance and run our application with a mvn command.
 
 # Available resources
 
@@ -12,9 +11,19 @@ class we need to configure the deserializer so it understands that the byte[] ob
 Form class will be delivered as a base64 encoded string value property in the JSON
 body. 
 
-We also added some dependencies in the pom for this.
+We show you two ways of implementing this. The simple way is to configure the binary
+data strategy to use BASE64 (this will result in (de)serialization of byte[] into base64 encoded
+strings). This is the default solution and we configure this in the application class.
 
-TODO : this doesn't work yet!
+The more comples solution is to write your own JSONB adapter (Websphere uses JSONB for 
+(de)serialization) for the Form class and configure this adapter to be used. This is
+again configured in the application class. The actual addition of the adapter has been 
+commented out. To actually use it outcomment the configuration of the strategy and 
+incomment the addition of this adapter.
+
+In the server.xml we nee to configure the jsonb feature to be deployed.
+
+We also added some jsonb dependencies in the pom.
 
 ## FileUploadWithFormResource
 
@@ -46,4 +55,5 @@ Demo api calls can be found in the main readme.
 - https://www.ibm.com/support/knowledgecenter/en/SSAW57_8.5.5/com.ibm.websphere.nd.multiplatform.doc/ae/twbs_jaxrs_configjaxrs11method.html
 - https://openliberty.io/guides/maven-intro.html#creating-the-project-pom-file
 - https://openliberty.io/guides/maven-intro.html
+- https://developer.ibm.com/languages/java/articles/j-javaee8-json-binding-3/
 - https://adambien.blog/roller/abien/entry/jax_rs_json_b_configuration

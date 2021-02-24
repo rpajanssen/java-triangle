@@ -2,9 +2,7 @@
 <server description="${project.name}">
   <featureManager>
     <feature>jaxrs-2.1</feature>
-<!--    <feature>jsonb-1.0</feature>-->
-<!--    <feature>cdi-2.0</feature>-->
-<!--    <feature>beanValidation-2.0</feature>-->
+    <feature>jsonb-1.0</feature> <!-- added to support a bit more (de)serialization options over jsonp -->
   </featureManager>
 
   <httpEndpoint httpPort="8080" httpsPort="9443" id="defaultHttpEndpoint" />

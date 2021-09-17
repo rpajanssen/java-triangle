@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- <parent>
+        <groupId>com.abnamro.coesd</groupId>
+        <artifactId>master-pom</artifactId>
+        <version>4.0.0</version>
+    </parent> -->
+
+    <groupId>com.abnamro.training</groupId>
+    <artifactId>ocp-ch11</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>OCP CH11</name>
+    <description>Some example code for the OCP training for chapter 11</description>
+
+    <properties>
+        <java.source>11</java.source>
+        <java.target>11</java.target>
+    </properties>
+
+    <modules>
+        <module>developer-feeding</module>
+        <module>developer-meetups</module>
+        <module>developer-api</module>
+        <module>developer-pool</module>
+        <module>developer-lazy</module>
+        <module>developer-hipo</module>
+        <module>company</module>
+    </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                    <configuration>
+                        <source>${java.source}</source>
+                        <target>${java.target}</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

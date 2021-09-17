@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.abnamro.training</groupId>
+        <artifactId>ocp-ch11</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.abnamro.training</groupId>
+    <artifactId>developer-pool</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>OCP CH11 Pool</name>
+    <description>Some example code for the OCP training for chapter 11</description>
+
+    <properties>
+        <java.source>11</java.source>
+        <java.target>11</java.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.abnamro.training</groupId>
+            <artifactId>developer-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.junit.jupiter</groupId>-->
+<!--            <artifactId>junit-jupiter-engine</artifactId>-->
+<!--            <version>5.7.2</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.junit.platform</groupId>-->
+<!--            <artifactId>junit-platform-commons</artifactId>-->
+<!--            <version>1.7.2</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+
+    </dependencies>
+</project>

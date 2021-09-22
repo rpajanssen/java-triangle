@@ -13,8 +13,28 @@ javac -p mods -d target/developer-feeding @sources.txt
 jar -cvf mods/developer-feeding.jar -C target/developer-feeding/ .
 
 # compile developer-meetups module to "target/developer-meetups"
-#
-# see comments above for the developer-feeding module
 find source/developer-meetups/ -name *.java > sources.txt
 javac -p mods -d target/developer-meetups @sources.txt
 jar -cvf mods/developer-meetups.jar -C target/developer-meetups/ .
+
+# compile developer-lazy module to "target/developer-lazy"
+find source/developer-lazy/ -name *.java > sources.txt
+javac -p mods -d target/developer-lazy @sources.txt
+jar -cvf mods/developer-lazy.jar -C target/developer-lazy/ .
+
+# compile developer-hipo module to "target/developer-hipo"
+find source/developer-hipo/ -name *.java > sources.txt
+javac -p mods -d target/developer-hipo @sources.txt
+jar -cvf mods/developer-hipo.jar -C target/developer-hipo/ .
+
+# compile developer-pool module to "target/developer-pool"
+find source/developer-pool/ -name *.java > sources.txt
+javac -p mods -d target/developer-pool @sources.txt
+jar -cvf mods/developer-pool.jar -C target/developer-pool/ .
+
+# compile company module to "target/company"
+find source/company/ -name *.java > sources.txt
+javac -p mods -d target/company @sources.txt
+jar -cvf mods/company.jar -C target/company/ .
+
+java -p mods -m com.abnamro.company/com.abnamro.company.WorkingDay

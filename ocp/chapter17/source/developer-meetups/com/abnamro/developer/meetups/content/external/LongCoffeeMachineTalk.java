@@ -20,7 +20,7 @@ public class LongCoffeeMachineTalk implements Content {
         Content.super.consume();
         new Gossip().consume();
         Content.super.consume();
-        new Liquorice().eatIt();
+        new Liquorice().consume();
         Content.super.consume();
     }
 }

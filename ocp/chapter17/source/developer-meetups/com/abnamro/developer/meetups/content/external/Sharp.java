@@ -10,6 +10,6 @@ public class Sharp implements Content {
 
     @Override
     public String getDescription() {
-        return "How to learn a developer about stuff he'll never have to do.";
+        return "How to learn a developer about the real important stuff.";
     }
 }

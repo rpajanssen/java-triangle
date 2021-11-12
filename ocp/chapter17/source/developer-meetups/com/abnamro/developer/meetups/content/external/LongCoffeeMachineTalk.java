@@ -7,7 +7,7 @@ import com.abnamro.developer.meetups.interfaces.Content;
 public class LongCoffeeMachineTalk implements Content {
     @Override
     public String getTitle() {
-        return "Relaxing short break";
+        return "Relaxing short break with some coffee";
     }
 
     @Override

@@ -7,8 +7,10 @@ import demo.fantastic.AwesomeApi;
 public class MyApp {
 
     public static void main(String... args) {
-        MyApi myApi = new AwesomeApi("a value");
+        MyApi myApi = new AwesomeApi();
 
-        System.out.println("Value=" + myApi.getMyValue());
+        MyService myService = new MyService(myApi);
+
+        myService.work();
     }
 }

@@ -5,8 +5,8 @@ import demo.api.MyApi;
 public class AwesomeApi implements MyApi {
     private final String myValue;
 
-    public AwesomeApi(String value) {
-        this.myValue = value;
+    public AwesomeApi() {
+        this.myValue = "a value";
     }
 
     @Override

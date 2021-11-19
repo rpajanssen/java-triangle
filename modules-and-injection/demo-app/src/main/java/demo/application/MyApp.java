@@ -9,7 +9,8 @@ public class MyApp {
 
     public static void main(String... args) {
         Injector injector = Guice.createInjector(
-                new AwesomeApiModule()
+                new AwesomeApiModule() // introduces a direct dependency on this "implementation"
+                                       // opposite to the service locator pattern
         );
 
         MyService myService = injector.getInstance(MyService.class);

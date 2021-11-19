@@ -1,15 +1,18 @@
 package demo.application;
 
-import demo.api.MyApi;
+import demo.fantastic.guice.AwesomeApiModule;
 
-import demo.fantastic.AwesomeApi;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 public class MyApp {
 
     public static void main(String... args) {
-        MyApi myApi = new AwesomeApi();
+        Injector injector = Guice.createInjector(
+                new AwesomeApiModule()
+        );
 
-        MyService myService = new MyService(myApi);
+        MyService myService = injector.getInstance(MyService.class);
 
         myService.work();
     }

@@ -1,7 +1,9 @@
 package demo.fantastic;
 
+import com.google.inject.Singleton;
 import demo.api.MyApi;
 
+@Singleton
 public class AwesomeApi implements MyApi {
     private final String myValue;
 

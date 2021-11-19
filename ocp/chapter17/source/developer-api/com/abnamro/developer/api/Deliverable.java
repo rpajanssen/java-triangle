@@ -2,10 +2,12 @@ package com.abnamro.developer.api;
 
 public class Deliverable {
     private String task;
+    private Developer developer;
 
-    public Deliverable(String task) {
-        System.out.println("Completing " + task);
+    public Deliverable(Developer developer, String task) {
+        System.out.println(developer.getFullName() + " completed " + task);
         this.task = task;
+        this.developer = developer;
     }
 
     public String getTask() {

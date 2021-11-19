@@ -16,11 +16,11 @@ public class LongCoffeeMachineTalk implements Content {
     }
 
     @Override
-    public void consume() {
-        Content.super.consume();
-        new Gossip().consume();
-        Content.super.consume();
-        new Liquorice().consume();
-        Content.super.consume();
+    public void consume(String name) {
+        Content.super.consume(name);
+        new Gossip().consume(name);
+        Content.super.consume(name);
+        new Liquorice().consume(name);
+        Content.super.consume(name);
     }
 }

@@ -17,23 +17,30 @@ public class ProDev implements Developer {
     }
 
     @Override
+    public String getFullName() {
+        return "Chuck Norris";
+    }
+
+
+    @Override
     public List<Deliverable> work() {
         List<Deliverable> deliverables = new ArrayList<>();
 
-        new ShortCoffeeMachineTalk().consume();
-        new Sharp().consume();
-        deliverables.add(new Deliverable("new feature"));
-        new ShortCoffeeMachineTalk().consume();
-        deliverables.add(new Deliverable("updated documentation"));
-        deliverables.add(new Deliverable("planned demo"));
-        new Lunch().consume();
-        deliverables.add(new Deliverable("refined 3 stories"));
-        new ShortCoffeeMachineTalk().consume();
-        deliverables.add(new Deliverable("detailed design after mob design session"));
-        new ShortCoffeeMachineTalk().consume();
-        new OcpChapterEleven().consume();
-        deliverables.add(new Deliverable("new feature"));
-        deliverables.add(new Deliverable("reviewed pull request"));
+        new ShortCoffeeMachineTalk().consume(getFullName());
+        new Sharp().consume(getFullName());
+        deliverables.add(new Deliverable(this, "new feature"));
+        deliverables.add(new Deliverable(this, "updated dependencies after touching the code"));
+        new ShortCoffeeMachineTalk().consume(getFullName());
+        deliverables.add(new Deliverable(this, "updated documentation"));
+        deliverables.add(new Deliverable(this, "planned demo"));
+        new Lunch().consume(getFullName());
+        deliverables.add(new Deliverable(this, "refined 3 stories"));
+        new ShortCoffeeMachineTalk().consume(getFullName());
+        deliverables.add(new Deliverable(this, "detailed design after mob design session"));
+        new ShortCoffeeMachineTalk().consume(getFullName());
+        new OcpChapterEleven().consume(getFullName());
+        deliverables.add(new Deliverable(this, "new feature"));
+        deliverables.add(new Deliverable(this, "reviewed pull request"));
 
         return deliverables;
     }

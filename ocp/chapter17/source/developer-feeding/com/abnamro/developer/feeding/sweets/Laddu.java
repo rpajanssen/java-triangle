@@ -5,8 +5,8 @@ import com.abnamro.developer.feeding.interfaces.Snack;
 
 public class Laddu implements Snack {
     @Override
-    public Experience consume() {
-        System.out.println("Eating laddu...");
+    public Experience consume(String name) {
+        System.out.println(name + " eating laddu...");
         return Experience.DELICIOUS;
     }
 }

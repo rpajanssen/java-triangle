@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 
 public final class DeveloperPool {
 
+    private DeveloperPool() {
+        throw new UnsupportedOperationException();
+    }
+
     public static List<Developer> getDevelopers(String blockId) {
         ServiceLoader<Developer> loader = ServiceLoader.load(Developer.class);
 

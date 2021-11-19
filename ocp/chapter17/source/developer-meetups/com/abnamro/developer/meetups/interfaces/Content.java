@@ -4,7 +4,7 @@ public interface Content {
     String getTitle();
     String getDescription();
 
-    default void consume() {
-        System.out.println("Consuming " + getTitle());
+    default void consume(String name) {
+        System.out.println(name + " consuming " + getTitle());
     }
 }

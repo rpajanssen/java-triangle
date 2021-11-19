@@ -5,14 +5,14 @@ import com.abnamro.developer.feeding.interfaces.Experience;
 
 public class RedBull implements Drink {
     @Override
-    public Experience sip() {
-        System.out.println("Sipping RedBull...");
+    public Experience sip(String name) {
+        System.out.println(name + "sipping RedBull...");
         return Experience.WHATWASTHAT;
     }
 
     @Override
-    public Experience gulp() {
-        System.out.println("Drinking RedBull...");
+    public Experience gulp(String name) {
+        System.out.println(name + "drinking RedBull...");
         return Experience.YUCK;
     }
 }

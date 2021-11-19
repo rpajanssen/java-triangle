@@ -17,23 +17,28 @@ public class LazyBastard implements Developer {
     }
 
     @Override
+    public String getFullName() {
+        return "Caf Febreak";
+    }
+
+    @Override
     public List<Deliverable> work() {
         List<Deliverable> deliverables = new ArrayList<>();
 
-        new ShortCoffeeMachineTalk().consume();
-        deliverables.add(new Deliverable("logged in"));
-        new LongCoffeeMachineTalk().consume();
-        deliverables.add(new Deliverable("removed empty line from pom"));
-        new LongCoffeeMachineTalk().consume();
-        new Netflix().consume();
-        deliverables.add(new Deliverable("... (nothing actually)"));
-        new Lunch().consume();
-        deliverables.add(new Deliverable("fix broken build: out-commented failing unit test"));
-        new LongCoffeeMachineTalk().consume();
-        deliverables.add(new Deliverable("removed another empty line from pom"));
-        new ShortCoffeeMachineTalk().consume();
-        deliverables.add(new Deliverable("pressed some approve button cause team mate asked me to"));
-        new LongCoffeeMachineTalk().consume();
+        new ShortCoffeeMachineTalk().consume(getFullName());
+        deliverables.add(new Deliverable(this, "logged in"));
+        new LongCoffeeMachineTalk().consume(getFullName());
+        deliverables.add(new Deliverable(this, "removed empty line from pom"));
+        new LongCoffeeMachineTalk().consume(getFullName());
+        new Netflix().consume(getFullName());
+        deliverables.add(new Deliverable(this, "... (nothing actually)"));
+        new Lunch().consume(getFullName());
+        deliverables.add(new Deliverable(this, "fix broken build: out-commented failing unit test"));
+        new LongCoffeeMachineTalk().consume(getFullName());
+        deliverables.add(new Deliverable(this, "removed another empty line from pom"));
+        new ShortCoffeeMachineTalk().consume(getFullName());
+        deliverables.add(new Deliverable(this, "pressed some approve button cause team mate asked me to"));
+        new LongCoffeeMachineTalk().consume(getFullName());
 
         return deliverables;
     }

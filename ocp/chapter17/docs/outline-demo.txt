@@ -1,0 +1,43 @@
+Services
+
+The service provider API : developer API
+- module-info : no dependencies
+
+The service provider : developer pool
+- service loader
+  - list of providers with each one instance of an implementation of the service
+  - filtering it on block id
+  - module-info : transitive dependency
+
+Using the services : company
+- uses the developer pool to get the developers
+
+-> empty mods folder
+-> show mods folder
+
+run: example-compile-serviceapi-provider-consumer.sh
+- it compiles the service api, the service provider and the service consumer and starts the consumer
+  -> note the output!
+
+run: example-compile-lazy-dev.sh
+- compiles the lazy developer implementation and deploys the jar into the mods folder
+-> show mods folder
+
+run: run.sh
+- runs the working day application again... but we have not modified the service api, service provider
+  and the consumer... we just dropped the jar of an implementation
+
+run: example-compile-hipo-dev.sh
+- compiles the hipo developer implementation and deploys the jar into the mods folder
+-> show mods folder
+
+run: run.sh
+- runs the working day application again... but we have not modified the service api, service provider
+  and the consumer... we just dropped the jar of an implementation
+
+-> note output
+
+- delete developer-lazy.jar
+
+run: run.sh
+

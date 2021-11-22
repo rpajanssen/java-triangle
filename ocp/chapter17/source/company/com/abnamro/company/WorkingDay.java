@@ -9,6 +9,8 @@ public class WorkingDay {
     private final static List<String> teams = List.of( "HPBLOCK", "UPBLOCK");
 
     public static void main(String... args) {
+        System.out.println("Start working");
+
         teams.forEach(
                 team -> DeveloperPool.getDevelopers(team).parallelStream().forEach(
                         developer -> {
@@ -22,5 +24,7 @@ public class WorkingDay {
                         }
                 )
         );
+
+        System.out.println("Yeah... feet on the table and a beer");
     }
 }

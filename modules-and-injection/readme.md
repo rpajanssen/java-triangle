@@ -33,14 +33,8 @@ the DI framework. With that you will tightly couple your code to the DI framewor
 
 #### Combining Service Locator with a DI Framework
 
-Combining the Service Locator pattern with a DI framework gives us loos coupling with
+Combining the Service Locator pattern with a DI framework gives us loose coupling with
 the implementations and allows us to use dependency injection.
 
 We still have a tight coupling with the DI framework throughout our code.
 
-### Links
-
-https://sudonull.com/post/59978-Java-9-Modules-and-Dependency-Injection-Using-Guice-Company-Blog-Peter-Publishing-House
-https://github.com/java9-modularity/easytext-guice
-
-https://javalibs.com/artifact/jakarta.inject/jakarta.inject-api

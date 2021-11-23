@@ -7,10 +7,10 @@ pattern with a DI framework.
 The service locator pattern itself is showcased in the code for OCP Chapter 17.
 
 You can find the different examples by checking out the tags:
-- M_AND_I_PLAIN
-- M_AND_I_WITH_MODULES
-- M_AND_I_WITH_GUICE
-- M_AND_I_WITH_GUICE_AND_SL
+- M_AND_I_PLAIN             : base implementation (no modules, no injection)
+- M_AND_I_WITH_MODULES      : using modules (no injection)
+- M_AND_I_WITH_GUICE        : using modules and guice with injection
+- M_AND_I_WITH_GUICE_AND_SL : using modules and guice with injection with service locator
 
 #### Services with Service Locator
 
